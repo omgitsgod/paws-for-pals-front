@@ -7,3 +7,9 @@ test('renders learn react link', () => {
   const linkElement = getByText(/paws for pals/i);
   expect(linkElement).toBeInTheDocument();
 });
+
+test('renders paws logo', () => {
+  const { queryByTestId } = render(<App />);
+  const logo = queryByTestId('paws');
+  expect(logo).toBeInTheDocument();
+});
