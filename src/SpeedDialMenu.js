@@ -46,7 +46,7 @@ function SpeedDialMenu(props) {
         ariaLabel='Choose pet'
         className={classes.speedDial}
         hidden={hidden}
-        icon={<SpeedDialIcon />}
+        icon={<Pets />}
         onClose={handleClose}
         onOpen={handleOpen}
         open={open}
