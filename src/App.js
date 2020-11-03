@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Backdrop } from '@material-ui/core'
 import TopNav from './TopNav';
 import SpeedDialMenu from './SpeedDialMenu';
-import logo from './paws.png';
+import PetCardContainer from './PetCardContainer';
 import './App.css';
 
 function App() {
@@ -15,10 +15,9 @@ function App() {
       <Backdrop open={backdropStatus} />
       <TopNav />
       <header className='App-header'>
-        <img src={logo} className='App-logo' data-testid='paws' alt='paws' />
-        <p>paws for pals</p>
+        <PetCardContainer />
+        <SpeedDialMenu handleBackdrop={handleBackdrop} />
       </header>
-      <SpeedDialMenu handleBackdrop={handleBackdrop} />
     </div>
   );
 }
