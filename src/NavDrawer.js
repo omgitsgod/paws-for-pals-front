@@ -1,14 +1,10 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import { AppBar, Toolbar, Typography, Icon, IconButton, MenuItem, Menu, Button, Drawer, List, ListItemText, Divider, ListItem, ListItemIcon } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
-import MailIcon from '@material-ui/icons/Mail';
-import { Home, AccountBalance, LineWeight, ThumbsUpDown, Chat, LockOpen, Create, Star, Search, CreditCard, HowToVote, Event, People, AccountCircle } from '@material-ui/icons'
+import React from 'react';
+import { Drawer, List, ListItemText, Divider, ListItem, ListItemIcon } from '@material-ui/core';
+import { Home, Close as CloseIcon } from '@material-ui/icons';
 
 
 function NavDrawer (props) {
-  const { toggleDrawer, drawerStatus, classes } = props;
+  const { toggleDrawer, drawerStatus } = props;
 
   return (
     <Drawer open={drawerStatus} onClose={toggleDrawer(false)}>
@@ -25,7 +21,7 @@ function NavDrawer (props) {
                 onClick={toggleDrawer(true)}
                 aria-label='Menu'
               >
-                <MenuIcon />
+                <CloseIcon />
               </ListItemIcon>
               <ListItemText primary='paws for pals' />
             </ListItem>
