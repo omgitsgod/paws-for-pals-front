@@ -23,12 +23,12 @@ const trans = (r, s) =>
     r / 10
   }deg) rotateZ(${r}deg) scale(${s})`;
 
-function PetCardContainer() {
+function PetCardContainer(props) {
   const [gone] = useState(() => new Set());
   const [pets, setPets] = useState([]);
   const [cards, setCards] = useState([]);
   const [petOptions, setPetOptions] = useState({
-    location: '10002',
+    location: props.zip,
     distance: '10',
   });
   const fetchDogs = async () => {
@@ -41,7 +41,7 @@ function PetCardContainer() {
     setPets(result.animals);
     console.log(photos);
   };
-  const [props, set] = useSprings(cards.length, (i) => ({
+  const [springProps, set] = useSprings(cards.length, (i) => ({
     ...to(i),
     from: from(i),
   }));
@@ -80,7 +80,7 @@ function PetCardContainer() {
         setTimeout(() => gone.clear() || set((i) => to(i)), 600);
     }
   );
-  return props.map(({ x, y, rot, scale }, i) => (
+  return springProps.map(({ x, y, rot, scale }, i) => (
     <PetCard
       key={i}
       i={i}
