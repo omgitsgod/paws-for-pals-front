@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { SpeedDial, SpeedDialIcon, SpeedDialAction } from '@material-ui/lab';
-import { Pets } from '@material-ui/icons';
+import { Pets, Refresh } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,8 +22,9 @@ function SpeedDialMenu(props) {
   const [hidden, setHidden] = useState(false);
 
   const actions = [
-    { icon: <Pets />, name: 'Cats', action: onClickActions },
-    { icon: <Pets />, name: 'Dogs', action: onClickActions },
+    { icon: <Refresh />, name: 'Change Location', action: onClickActions.changeLocation },
+    { icon: <Pets />, name: 'Cats', action: onClickActions.getCats },
+    { icon: <Pets />, name: 'Dogs', action: onClickActions.getDogs },
     ];
 
   const handleVisibility = () => {

@@ -16,6 +16,11 @@ function App() {
   const wakeUp = () => {
     fetch(process.env.REACT_APP_BACK_HOST)
   }
+  const onClickActions = {
+    changeLocation: () => setZip(''),
+    getDogs: () => console.log('dogs'),
+    getCats: () => console.log('cats'),
+  }
 
   useEffect(() => {
     wakeUp()
@@ -25,8 +30,8 @@ function App() {
       <Backdrop open={backdropStatus} />
       <TopNav />
       <header className='App-header'>
-        {zip.length ? <PetCardContainer zip={zip}/> : <ZipCodeModal open={openZip} setZip={setZip}/>}
-        <SpeedDialMenu handleBackdrop={handleBackdrop} />
+        {zip.length ? <PetCardContainer zip={zip}/> : <ZipCodeModal open={openZip} setOpen={setOpenZip} setZip={setZip}/>}
+        <SpeedDialMenu handleBackdrop={handleBackdrop} onClickActions={onClickActions} />
       </header>
     </div>
   );
