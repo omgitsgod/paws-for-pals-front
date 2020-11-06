@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Backdrop } from '@material-ui/core'
 import TopNav from './TopNav';
 import SpeedDialMenu from './SpeedDialMenu';
@@ -13,6 +13,13 @@ function App() {
   const handleBackdrop = (bool) => {
     setBackdropStatus(bool);
   };
+  const wakeUp = () => {
+    fetch(process.env.REACT_APP_BACK_HOST)
+  }
+
+  useEffect(() => {
+    wakeUp()
+  }, [])
   return (
     <div className='App'>
       <Backdrop open={backdropStatus} />
