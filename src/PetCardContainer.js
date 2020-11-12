@@ -24,19 +24,21 @@ const trans = (r, s) =>
   }deg) rotateZ(${r}deg) scale(${s})`;
 
 function PetCardContainer(props) {
+  const { zip, type } = props;
   const [gone] = useState(() => new Set());
   const [pets, setPets] = useState([]);
   const [cards, setCards] = useState([]);
   const [petOptions, setPetOptions] = useState({
-    location: props.zip,
+    location: zip,
     distance: '10',
   });
-  const fetchDogs = async () => {
+  const fetchPets = async () => {
     const backHost = process.env.REACT_APP_BACK_HOST;
     const options = handlePetOptions(petOptions);
-    const url = `${backHost}/Dog?${options}`
+    const url = `${backHost}/${type}?${options}`;
     const result = await fetch(url).then((r) => r.json());
-    const photos = result.animals.map(x => x.photos[0].full)
+    const filtered = result.animals.filter(pet => pet.photos[0]);
+    const photos = filtered.map(pet => pet.photos[0].full);
     setCards(photos);
     setPets(result.animals);
     console.log(photos);
@@ -47,8 +49,8 @@ function PetCardContainer(props) {
   }));
 
   useEffect(() => {
-    fetchDogs(petOptions)
-  }, [])
+    fetchPets()
+  }, [type])
   
   const bind = useDrag(
     ({
