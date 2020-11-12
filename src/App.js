@@ -9,6 +9,7 @@ import './App.css';
 function App() {
   const [backdropStatus, setBackdropStatus] = useState(false);
   const [zip, setZip] = useState('');
+  const [type, setType] = useState('Dog');
   const [openZip, setOpenZip] = useState(true);
   const handleBackdrop = (bool) => {
     setBackdropStatus(bool);
@@ -18,8 +19,8 @@ function App() {
   }
   const onClickActions = {
     changeLocation: () => setZip(''),
-    getDogs: () => console.log('dogs'),
-    getCats: () => console.log('cats'),
+    getDogs: () => setType('Dog'),
+    getCats: () => setType('Cat'),
   }
 
   useEffect(() => {
@@ -30,7 +31,7 @@ function App() {
       <Backdrop open={backdropStatus} />
       <TopNav />
       <header className='App-header'>
-        {zip.length ? <PetCardContainer zip={zip}/> : <ZipCodeModal open={openZip} setOpen={setOpenZip} setZip={setZip}/>}
+        {zip.length ? <PetCardContainer zip={zip} type={type} /> : <ZipCodeModal open={openZip} setOpen={setOpenZip} setZip={setZip}/>}
         <SpeedDialMenu handleBackdrop={handleBackdrop} onClickActions={onClickActions} />
       </header>
     </div>
