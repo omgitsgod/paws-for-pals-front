@@ -1,40 +1,90 @@
-import React, { useState } from 'react';
+import React, { useEffect, useReducer } from 'react';
 
-function useGetPets ({ type, options }) {
-  const [pets, setPets] = useState([]);
-  const [petPhotos, setPetPhotos] = useState([]);
-  const [stringifiedType, stringifiedOptions] = [JSON.stringify(type), JSON.stringify(options)];
+const handleOptions = (input) => {
+  let options = '';
+  for (const entry in input) {
+    options += `${entry}=${input[entry]}&`;
+  }
+  return options.slice(0, -1);
+};
+
+const dataFetchReducer = (state, action) => {
+  switch (action.type) {
+    case 'SET_TYPE':
+      return {
+        ...state,
+        data: [],
+        type: action.payload
+      };
+    case 'SET_OPTIONS':
+      return {
+        ...state,
+        data: [],
+        options: action.payload
+      }
+    case 'FETCH_INIT':
+      return { 
+        ...state,
+        isLoading: true,
+        isError: false,
+        data: []
+      };
+    case 'FETCH_SUCCESS':
+      return { 
+        ...state,
+        isLoading: false,
+        isError: false,
+        data: action.payload
+      };
+    case 'FETCH_FAILURE':
+      return { 
+        ...state,
+        isLoading: false,
+        isError: true
+      };
+    default:
+      throw new Error();
+  }
+};
+
+function useGetPets(initialType, initialOptions) {
+  const [state, dispatch] = useReducer(dataFetchReducer, {
+    type: initialType,
+    options: initialOptions,
+    isLoading: false,
+    isError: false,
+    data: [],
+  });
+
+  const setOptions = (options) => {
+    dispatch({type: 'SET_OPTIONS', payload: options});
+  }
+
+  const setType = (type) => {
+    dispatch({type: 'SET_TYPE', payload: type});
+  }
 
   useEffect(() => {
-    const handlePetOptions = (input) => {
-      let options = '';
-      for (const entry in input) {
-        options += `${entry}=${input[entry]}&`;
-      }
-      return options.slice(0, -1);
-    };
     const getPets = async () => {
+      dispatch({ type: 'FETCH_INIT' });
       const backHost = process.env.REACT_APP_BACK_HOST;
-      const petOptions = handlePetOptions(options);
-      const url = `${backHost}/${type}?${petOptions}`;
+      const url = `${backHost}/${state.type}?${handleOptions(state.options)}`;
       try {
         const result = await fetch(url).then((r) => r.json());
-        if (result.status === 200) {
-          const filtered = result.animals.filter((pet) => pet.photos[0]);
-          const photos = filtered.map((pet) => pet.photos[0].full);
-          setPets(filtered);
-          setPetPhotos(photos);
-          console.log(photos);
-        } else {
-          console.error(`Error ${result.status} ${result.statusText}`);
-        }
+        const filtered = result.animals.filter((pet) => pet.photos[0]);
+        const photos = filtered.map((pet) => pet.photos[0].full);
+      //  setPets(filtered);
+        dispatch({ type: 'FETCH_SUCCESS', payload: photos });
+        console.log(photos);
       } catch (error) {
-        console.error(`Error ${error}`);
+        dispatch({ type: 'FETCH_FAILURE' });
       }
-    };
-  }, [stringifiedType, stringifiedOptions]);
+    }
 
-  return petPhotos;
+    getPets();
+  }, [state.type, handleOptions(state.options)]);
+
+  return [state, setType, setOptions];
 }
 
 export default useGetPets;
