@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function SpeedDialMenu(props) {
-  const { onClickActions, handleBackdrop } = props;
+  const { onClickActions } = props;
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
@@ -33,12 +33,10 @@ function SpeedDialMenu(props) {
 
   const handleOpen = () => {
     setOpen(true);
-    handleBackdrop(true)
   };
 
   const handleClose = () => {
     setOpen(false);
-    handleBackdrop(false);
   };
 
   return (
