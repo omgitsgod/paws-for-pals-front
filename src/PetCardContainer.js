@@ -1,15 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useSprings, animated, to as interpolate } from 'react-spring';
+import { useSprings } from 'react-spring';
 import { useDrag } from 'react-use-gesture';
+import useGetPets from './useGetPets';
 import PetCard from './PetCard';
 
-const handlePetOptions = (input) => {
-  let options = ''
-  for (const entry in input) {
-    options+=`${entry}=${input[entry]}&`
-  }
-  return options.slice(0, -1)
-}
 const to = (i) => ({
   x: 0,
   y: i * -4,
@@ -26,32 +20,16 @@ const trans = (r, s) =>
 function PetCardContainer(props) {
   const { zip, type } = props;
   const [gone] = useState(() => new Set());
-  const [pets, setPets] = useState([]);
-  const [cards, setCards] = useState([]);
   const [petOptions, setPetOptions] = useState({
     location: zip,
     distance: '10',
   });
-  const fetchPets = async () => {
-    const backHost = process.env.REACT_APP_BACK_HOST;
-    const options = handlePetOptions(petOptions);
-    const url = `${backHost}/${type}?${options}`;
-    const result = await fetch(url).then((r) => r.json());
-    const filtered = result.animals.filter(pet => pet.photos[0]);
-    const photos = filtered.map(pet => pet.photos[0].full);
-    setCards(photos);
-    setPets(result.animals);
-    console.log(photos);
-  };
-  const [springProps, set] = useSprings(cards.length, (i) => ({
+  const [state, setType, setOptions] = useGetPets(type, petOptions);
+  const { data, isLoading } = state;
+  const [springProps, set] = useSprings(data.length, (i) => ({
     ...to(i),
     from: from(i),
   }));
-
-  useEffect(() => {
-    fetchPets()
-  }, [type])
-  
   const bind = useDrag(
     ({
       args: [index],
@@ -78,23 +56,31 @@ function PetCardContainer(props) {
           config: { friction: 50, tension: down ? 800 : isGone ? 200 : 500 },
         };
       });
-      if (!down && gone.size === cards.length)
+      if (!down && gone.size === data.length)
         setTimeout(() => gone.clear() || set((i) => to(i)), 600);
     }
   );
-  return springProps.map(({ x, y, rot, scale }, i) => (
-    <PetCard
-      key={i}
-      i={i}
-      x={x}
-      y={y}
-      rot={rot}
-      scale={scale}
-      trans={trans}
-      cards={cards}
-      bind={bind}
-    />
-  ));
+  useEffect(() => {
+    setType(type);
+  }, [type]);
+  
+  if (isLoading) {
+    return <p>loading...</p>;
+  } else if (data) {
+    return springProps.map(({ x, y, rot, scale }, i) => (
+      <PetCard
+        key={i}
+        i={i}
+        x={x}
+        y={y}
+        rot={rot}
+        scale={scale}
+        trans={trans}
+        cards={data}
+        bind={bind}
+      />
+    ));
+  }
 }
 
 export default PetCardContainer;
