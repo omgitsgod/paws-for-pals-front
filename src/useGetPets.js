@@ -65,6 +65,7 @@ function useGetPets(initialType, initialOptions) {
   };
 
   useEffect(() => {
+    let cancelRequest = false;
     const getPets = async () => {
       dispatch({ type: 'FETCH_INIT' });
       const backHost = process.env.REACT_APP_BACK_HOST;
@@ -74,14 +75,20 @@ function useGetPets(initialType, initialOptions) {
         const filtered = result.animals.filter((pet) => pet.photos[0]);
         const photos = filtered.map((pet) => pet.photos[0].full);
         //  setPets(filtered);
+        if (cancelRequest) return;
         dispatch({ type: 'FETCH_SUCCESS', payload: photos });
         console.log(photos);
       } catch (error) {
+        if (cancelRequest) return;
         dispatch({ type: 'FETCH_FAILURE' });
       }
     };
 
     getPets();
+
+    return () => {
+      cancelRequest = true;
+    };
   }, [state.type, handleOptions(state.options)]);
 
   return [state, setType, setOptions];
