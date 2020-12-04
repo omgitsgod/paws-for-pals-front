@@ -8,6 +8,15 @@ const handleOptions = (input) => {
   return options.slice(0, -1);
 };
 
+const formatData = (data) => {
+  let result = [];
+  for (let i = 0; i < data.length; i += 10) {
+    let arr = data.slice(i, i + 10);
+    result.push(arr);
+  }
+  return result;
+};
+
 const dataFetchReducer = (state, action) => {
   switch (action.type) {
     case 'SET_TYPE':
