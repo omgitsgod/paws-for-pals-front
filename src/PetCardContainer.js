@@ -19,7 +19,8 @@ const trans = (r, s) =>
 
 function PetCardContainer(props) {
   const { zip, type } = props;
-  const [gone] = useState(() => new Set());
+  const [disliked] = useState(() => new Set());
+  const [liked] = useState(() => new Set());
   const [petOptions, setPetOptions] = useState({
     location: zip,
     distance: '10',
@@ -41,10 +42,13 @@ function PetCardContainer(props) {
     }) => {
       const trigger = velocity > 0.2;
       const dir = xDir < 0 ? -1 : 1;
-      if (!down && trigger) gone.add(index);
+      if (!down && trigger && xDir <= -.5 && distance > 150) disliked.add(index);
+      if (!down && trigger && xDir >= .5 && distance > 150) liked.add(index);
+      console.log('liked', liked)
+      console.log('disliked', disliked)
       set((i) => {
         if (index !== i) return;
-        const isGone = gone.has(index);
+        const isGone = disliked.has(index) || liked.has(index);
         const x = isGone ? (200 + window.innerWidth) * dir : down ? mx : 0;
         const rot = mx / 100 + (isGone ? dir * 10 * velocity : 0);
         const scale = down ? 1.1 : 1;
@@ -56,8 +60,9 @@ function PetCardContainer(props) {
           config: { friction: 50, tension: down ? 800 : isGone ? 200 : 500 },
         };
       });
-      if (!down && gone.size === data.length)
-        setTimeout(() => gone.clear() || set((i) => to(i)), 600);
+      if (!down && disliked.size + liked.size === data.length)
+        setTimeout(() => disliked.clear() || set((i) => to(i)), 600);
+        //next()
     }
   );
   useEffect(() => {
