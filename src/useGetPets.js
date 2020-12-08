@@ -44,6 +44,7 @@ const dataFetchReducer = (state, action) => {
         isLoading: false,
         isError: false,
         data: action.payload,
+        visableData: action.payload[state.page]
       };
     case 'FETCH_FAILURE':
       return {
@@ -51,6 +52,12 @@ const dataFetchReducer = (state, action) => {
         isLoading: false,
         isError: true,
       };
+    case 'NEXT_PAGE':
+      return {
+        ...state,
+        visableData: state.data[state.page + 1],
+        page: state.page + 1
+      }
     default:
       throw new Error();
   }
@@ -63,15 +70,19 @@ function useGetPets(initialType, initialOptions) {
     isLoading: false,
     isError: false,
     data: [],
+    visableData: [],
+    page: 0,
   });
 
   const setOptions = (options) => {
     dispatch({ type: 'SET_OPTIONS', payload: options });
   };
-
   const setType = (type) => {
     dispatch({ type: 'SET_TYPE', payload: type });
   };
+  const nextPage = () => {
+    dispatch({ type: 'NEXT_PAGE'})
+  }
 
   useEffect(() => {
     let cancelRequest = false;
@@ -83,9 +94,10 @@ function useGetPets(initialType, initialOptions) {
         const result = await fetch(url).then((r) => r.json());
         const filtered = result.animals.filter((pet) => pet.photos[0]);
         const photos = filtered.map((pet) => pet.photos[0].full);
+        const formated = formatData(photos);
         //  setPets(filtered);
         if (cancelRequest) return;
-        dispatch({ type: 'FETCH_SUCCESS', payload: photos });
+        dispatch({ type: 'FETCH_SUCCESS', payload: formated });
         console.log(photos);
       } catch (error) {
         if (cancelRequest) return;
@@ -99,8 +111,7 @@ function useGetPets(initialType, initialOptions) {
       cancelRequest = true;
     };
   }, [state.type, handleOptions(state.options)]);
-
-  return [state, setType, setOptions];
+  return [{data: state.visableData, isLoading: state.isLoading, isError: state.isError}, setType, setOptions, nextPage];
 }
 
 export default useGetPets;
