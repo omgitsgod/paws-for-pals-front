@@ -61,7 +61,7 @@ function ZipCodeModal(props) {
                             type='submit'
                             fullWidth
                             variant='contained'
-                            color='secondary'
+                        //   color='primary' 
                             className={classes.submit}
                             style={{ background: 'transparent', boxShadow: 'none' }}
                         >
@@ -69,7 +69,7 @@ function ZipCodeModal(props) {
                         </Button>
                         </FormControl>
                     </form>
-                    <Divider />
+        {/*    <Divider /> */}
                 {/*    <Typography variant='h5'>
                         Allow Access To Location
                     </Typography>
