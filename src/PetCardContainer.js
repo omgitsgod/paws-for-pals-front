@@ -25,8 +25,8 @@ function PetCardContainer(props) {
     location: zip,
     distance: '10',
   });
-  const [state, setType, setOptions] = useGetPets(type, petOptions);
-  const { data, isLoading } = state;
+  const [state, setType, setOptions, nextPage] = useGetPets(type, petOptions);
+  const { data, isLoading, isError } = state;
   const [springProps, set] = useSprings(data.length, (i) => ({
     ...to(i),
     from: from(i),
@@ -42,8 +42,9 @@ function PetCardContainer(props) {
     }) => {
       const trigger = velocity > 0.2;
       const dir = xDir < 0 ? -1 : 1;
-      if (!down && trigger && xDir <= -.5 && distance > 150) disliked.add(index);
-      if (!down && trigger && xDir >= .5 && distance > 150) liked.add(index);
+      console.log(dir)
+      if (!down && trigger && xDir <= -.5) disliked.add(index);
+      if (!down && trigger && xDir >= .5) liked.add(index);
       console.log('liked', liked)
       console.log('disliked', disliked)
       set((i) => {
