@@ -44,8 +44,8 @@ const PetCard = ({ i, x, y, rot, scale, trans, bind, cards }) => {
   const card = cards[i];
   const photo = card.photos[0].full;
   const { name, distance, description } = card;
-  const nameSpaceCount = card.name.split(' ').length - 1;
-  const nameVariant = nameSpaceCount > 2 ? 'h5' : 'h4';
+  const nameSpaceCount = name.split(' ').length - 1;
+  const nameVariant = nameSpaceCount > 1 ? 'h5' : 'h4';
 
   return (
     <animated.div className={classes.organize} key={i} style={{ x, y }}>
