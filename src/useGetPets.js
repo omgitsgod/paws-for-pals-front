@@ -93,12 +93,9 @@ function useGetPets(initialType, initialOptions) {
       try {
         const result = await fetch(url).then((r) => r.json());
         const filtered = result.animals.filter((pet) => pet.photos[0]);
-        const photos = filtered.map((pet) => pet.photos[0].full);
-        const formated = formatData(photos);
-        //  setPets(filtered);
+        const formated = formatData(filtered);
         if (cancelRequest) return;
         dispatch({ type: 'FETCH_SUCCESS', payload: formated });
-        console.log(photos);
       } catch (error) {
         if (cancelRequest) return;
         dispatch({ type: 'FETCH_FAILURE' });
@@ -111,6 +108,9 @@ function useGetPets(initialType, initialOptions) {
       cancelRequest = true;
     };
   }, [state.type, handleOptions(state.options)]);
+  useEffect(() => {}, [state.page]);
+  console.log('state', state.data)
+  console.log('visable', state.visableData)
   return [{data: state.visableData, isLoading: state.isLoading, isError: state.isError}, setType, setOptions, nextPage];
 }
 
