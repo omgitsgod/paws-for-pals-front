@@ -1,3 +1,23 @@
+/* architects-daughter-regular - latin */
+@font-face {
+  font-family: 'Architects Daughter';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./fonts/architects-daughter-v11-latin-regular.eot');
+  /* IE9 Compat Modes */
+  src: local(''),
+    url('./fonts/architects-daughter-v11-latin-regular.eot?#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */
+    url('./fonts/architects-daughter-v11-latin-regular.woff2') format('woff2'),
+    /* Super Modern Browsers */
+    url('./fonts/architects-daughter-v11-latin-regular.woff') format('woff'),
+    /* Modern Browsers */
+    url('./fonts/architects-daughter-v11-latin-regular.ttf') format('truetype'),
+    /* Safari, Android, iOS */
+    url('./fonts/architects-daughter-v11-latin-regular.svg#ArchitectsDaughter') format('svg');
+  /* Legacy iOS */
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
