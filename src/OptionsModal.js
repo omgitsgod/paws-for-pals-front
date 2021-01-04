@@ -29,7 +29,7 @@ function OptionsModal(props) {
     adult: true,
     senior: true,
   });
-  const [location, setLocation] = useState('None');
+  const [location, setLocation] = useState('Any');
 
   const handleType = (e) => {
     setType(e.target.value);
@@ -124,9 +124,9 @@ function OptionsModal(props) {
                 row
               >
                 <FormControlLabel
-                  value='None'
+                  value='Any'
                   control={<Radio />}
-                  label='None'
+                  label='Any'
                 />
                 <FormControlLabel
                   value='Choose'
