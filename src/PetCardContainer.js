@@ -18,19 +18,19 @@ const trans = (r, s) =>
   }deg) rotateZ(${r}deg) scale(${s})`;
 
 function PetCardContainer(props) {
-  const { zip, type } = props;
+  const { type, options } = props;
   const [disliked] = useState(() => new Set());
   const [liked] = useState(() => new Set());
-  const [petOptions, setPetOptions] = useState({
-    location: zip,
-    distance: '10',
-  });
-  const [state, setType, setOptions, nextPage] = useGetPets(type, petOptions);
+  const [state, setType, setOptions, nextPage] = useGetPets(type, options);
   const { data, isLoading, isError } = state;
   const [springProps, set] = useSprings(data.length, (i) => ({
     ...to(i),
     from: from(i),
   }));
+  const handleTimeout = () => {
+    liked.clear();
+    disliked.clear();
+  };
   const bind = useDrag(
     ({
       args: [index],
@@ -41,12 +41,13 @@ function PetCardContainer(props) {
       velocity,
     }) => {
       const trigger = velocity > 0.2;
+      console.log('distance', distance);
       const dir = xDir < 0 ? -1 : 1;
-      console.log(dir)
-      if (!down && trigger && xDir <= -.5) disliked.add(index);
-      if (!down && trigger && xDir >= .5) liked.add(index);
-      console.log('liked', liked)
-      console.log('disliked', disliked)
+      console.log(dir);
+      if (!down && trigger && xDir <= -0.5) disliked.add(index);
+      if (!down && trigger && xDir >= 0.5) liked.add(index);
+      console.log('liked', liked);
+      console.log('disliked', disliked);
       set((i) => {
         if (index !== i) return;
         const isGone = disliked.has(index) || liked.has(index);
@@ -62,14 +63,14 @@ function PetCardContainer(props) {
         };
       });
       if (!down && disliked.size + liked.size === data.length)
-        setTimeout(() => disliked.clear() || set((i) => to(i)), 600);
-        //next()
+        setTimeout(() => handleTimeout() || set((i) => to(i)), 600);
+      //next()
     }
   );
   useEffect(() => {
     setType(type);
   }, [type]);
-  
+
   if (isLoading) {
     return <p>loading...</p>;
   } else if (data) {
