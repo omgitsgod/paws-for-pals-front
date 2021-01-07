@@ -3,18 +3,19 @@ import useGetPets from './useGetPets';
 import TopNav from './TopNav';
 import SpeedDialMenu from './SpeedDialMenu';
 import PetCardContainer from './PetCardContainer';
-import ZipCodeModal from './ZipCodeModal';
+import ModalContainer from './ModalContainer';
 import './App.css';
 
 function App() {
-  const [zip, setZip] = useState('');
   const [type, setType] = useState('Dog');
-  const [openZip, setOpenZip] = useState(true);
+  const [options, setOptions] = useState({});
+  const [modal, setModal] = useState(true);
+  console.log(options)
   const wakeUp = () => {
     fetch(process.env.REACT_APP_BACK_HOST);
   };
   const onClickActions = {
-    changeLocation: () => setZip(''),
+    changeLocation: () => setModal(true),
     getDogs: () => setType('Dog'),
     getCats: () => setType('Cat'),
   };
@@ -26,10 +27,10 @@ function App() {
     <div className='App'>
       <TopNav />
       <header className='App-header'>
-        {zip.length ? (
-          <PetCardContainer zip={zip} type={type} />
+        {!modal ? (
+          <PetCardContainer type={type} options={options} />
         ) : (
-          <ZipCodeModal open={openZip} setOpen={setOpenZip} setZip={setZip} />
+          <ModalContainer open={modal} setOpen={setModal} setOptions={setOptions} setAnimal={setType}/>
         )}
         <SpeedDialMenu onClickActions={onClickActions} />
       </header>
