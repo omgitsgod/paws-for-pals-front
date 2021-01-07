@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import {
   Typography,
-  Modal,
-  Backdrop,
   Fade,
   FormControl,
   FormLabel,
@@ -10,18 +8,15 @@ import {
   FormGroup,
   Checkbox,
   FormControlLabel,
-  InputLabel,
-  Input,
-  IconButton,
   Button,
-  Divider,
   Radio,
+  Slider,
 } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import ZipCodeModal from './ZipCodeModal';
 
 function OptionsModal(props) {
-  const { classes, open, setZip } = props;
+  const { classes, open, setOpen, setOptions, setAnimal } = props;
   const [type, setType] = useState('Dog');
   const [age, setAge] = useState({
     baby: true,
@@ -29,7 +24,8 @@ function OptionsModal(props) {
     adult: true,
     senior: true,
   });
-  const [location, setLocation] = useState('Any');
+  const [locationType, setLocationType] = useState('Any');
+  const [location, setLocation] = useState(null);
 
   const handleType = (e) => {
     setType(e.target.value);
@@ -37,18 +33,86 @@ function OptionsModal(props) {
   const handleAge = (e) => {
     setAge({ ...age, [e.target.name]: e.target.checked });
   };
-  const handleLocation = (e) => {
-    setLocation(e.target.value);
+  const handleLocationType = (e) => {
+    setLocationType(e.target.value);
+  };
+  const handleAgeString = (input) => {
+    let age = '';
+    for (const entry in input) {
+      if (input[entry]) {
+        age += `${entry},`;
+      }
+    }
+    return age.slice(0, -1);
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    const tempOptions = {};
     const type = e.target.type.value;
-    const location = e.target.location.value;
-    console.log(type);
-    console.log(age);
-    console.log(location);
+    const ageString = handleAgeString(age);
+    tempOptions.age = ageString;
+    let distance;
+    if (location) {
+      tempOptions.location = location;
+    }
+    if (e.target.distance) {
+      tempOptions.distance = e.target.distance.value;
+    }
+    setOptions(tempOptions);
+    setAnimal(type);
+    console.log(tempOptions);
+    setOpen(false);
   };
-  if (location !== 'Choose') {
+  const handleLocation = (e) => {
+    setLocation(e);
+    setLocationType('Zip');
+  };
+  const valueText = (value) => {
+    return `${value} miles`;
+  };
+  const marks = [
+    {
+      value: 10,
+      label: 10,
+    },
+    {
+      value: 20,
+      label: 20,
+    },
+    {
+      value: 30,
+      label: 30,
+    },
+    {
+      value: 40,
+      label: 40,
+    },
+    {
+      value: 50,
+      label: 50,
+    },
+    {
+      value: 60,
+      label: 60,
+    },
+    {
+      value: 70,
+      label: 70,
+    },
+    {
+      value: 80,
+      label: 80,
+    },
+    {
+      value: 90,
+      label: 90,
+    },
+    {
+      value: 100,
+      label: 100,
+    },
+  ];
+  if (locationType !== 'Choose') {
     return (
       <Fade in={open}>
         <div className={classes.paper}>
@@ -117,27 +181,44 @@ function OptionsModal(props) {
             <FormControl margin='normal' required fullWidth>
               <FormLabel component='legend'>location</FormLabel>
               <RadioGroup
-                aria-label='type'
+                aria-label='location'
                 name='location'
-                value={location}
-                onChange={handleLocation}
+                value={locationType}
+                onChange={handleLocationType}
                 row
               >
-                <FormControlLabel
-                  value='Any'
-                  control={<Radio />}
-                  label='Any'
-                />
-                <FormControlLabel
-                  value='Choose'
-                  control={<Radio />}
-                  label='Choose Location'
-                />
+                <FormControlLabel value='Any' control={<Radio />} label='Any' />
+                {location && locationType === 'Zip' ? (
+                  <FormControlLabel
+                    value='Zip'
+                    control={<Radio />}
+                    label={location}
+                  />
+                ) : (
+                  <FormControlLabel
+                    value='Choose'
+                    control={<Radio />}
+                    label='Choose Location'
+                  />
+                )}
               </RadioGroup>
             </FormControl>
-            <FormControl margin='normal' required fullWidth>
-              <FormLabel component='legend'>Distance</FormLabel>
-            </FormControl>
+            {locationType == 'Zip' ? (
+              <FormControl margin='normal' required fullWidth>
+                <FormLabel component='legend'>Distance</FormLabel>
+                <Slider
+                  defaultValue={10}
+                  getAriaValueText={valueText}
+                  name='distance'
+                  aria-labelledby='distance'
+                  valueLabelDisplay='auto'
+                  step={5}
+                  marks={marks}
+                  min={5}
+                  max={100}
+                />
+              </FormControl>
+            ) : null}
             <Button
               type='submit'
               fullWidth
@@ -146,16 +227,15 @@ function OptionsModal(props) {
               className={classes.submit}
               style={{ background: 'transparent', boxShadow: 'none' }}
             >
-              FILTER RESULTS
+              FIND MY PAL
             </Button>
           </form>
         </div>
       </Fade>
     );
   } else {
-    return (<ZipCodeModal open={open} setZip={setZip} />)
+    return <ZipCodeModal open={open} setZip={handleLocation} />;
   }
-  
 }
 
 const styles = (theme) => ({
