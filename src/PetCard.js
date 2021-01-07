@@ -61,13 +61,18 @@ const PetCard = ({ i, x, y, rot, scale, trans, bind, cards }) => {
         <Typography variant={nameVariant} align='left'>
           {name}
         </Typography>
-        <Typography className={classes.distance} variant='h6' align='left'>
-          <Icon>
-            <LocationOn />
-          </Icon>
-          {distance > 1 ? distance.toFixed(2) : '< 1'} miles away
+        {distance ? (
+          <Typography className={classes.distance} variant='h6' align='left'>
+            <Icon>
+              <LocationOn />
+            </Icon>
+            {distance > 1 ? distance.toFixed(2) : '< 1'} miles away
+          </Typography>
+        ) : null}
+
+        <Typography className={classes.description} align='left'>
+          {description}
         </Typography>
-        <Typography className={classes.description} align='left'>{description}</Typography>
       </animated.div>
     </animated.div>
   );
