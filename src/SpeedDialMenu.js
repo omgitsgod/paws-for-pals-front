@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { SpeedDial, SpeedDialIcon, SpeedDialAction } from '@material-ui/lab';
+import { SpeedDial, SpeedDialAction } from '@material-ui/lab';
 import { Pets, Refresh, Tune } from '@material-ui/icons';
 import CatIcon from './CatIcon';
 import DogIcon from './DogIcon';
@@ -29,10 +29,6 @@ function SpeedDialMenu(props) {
     { icon: <CatIcon />, name: 'Cats', action: onClickActions.getCats },
     { icon: <DogIcon />, name: 'Dogs', action: onClickActions.getDogs },
     ];
-
-  const handleVisibility = () => {
-    setHidden((prevHidden) => !prevHidden);
-  };
 
   const handleOpen = () => {
     setOpen(true);
