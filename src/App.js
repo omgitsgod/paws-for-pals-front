@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import useGetPets from './useGetPets';
-import TopNav from './TopNav';
+import TopBar from './TopBar';
 import SpeedDialMenu from './SpeedDialMenu';
 import PetCardContainer from './PetCardContainer';
 import ModalContainer from './ModalContainer';
@@ -15,7 +14,7 @@ function App() {
     fetch(process.env.REACT_APP_BACK_HOST);
   };
   const onClickActions = {
-    changeLocation: () => setModal(true),
+    changeOptions: () => setModal(true),
     getDogs: () => setType('Dog'),
     getCats: () => setType('Cat'),
   };
@@ -25,8 +24,8 @@ function App() {
 
   return (
     <div className='App'>
-      <TopNav />
-      <header className='App-header'>
+      {!modal ? <TopBar /> : null}
+      <header className='Content'>
         {!modal ? (
           <PetCardContainer type={type} options={options} />
         ) : (
