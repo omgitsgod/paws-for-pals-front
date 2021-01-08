@@ -51,7 +51,6 @@ function OptionsModal(props) {
     const type = e.target.type.value;
     const ageString = handleAgeString(age);
     tempOptions.age = ageString;
-    let distance;
     if (location) {
       tempOptions.location = location;
     }
@@ -117,7 +116,10 @@ function OptionsModal(props) {
       <Fade in={open}>
         <div className={classes.paper}>
           <Typography variant='h5' align='center'>
-            Options
+            paws for pals
+          </Typography>
+          <Typography variant='h6' align='center'>
+            find your new best friend
           </Typography>
           <form className={classes.form} onSubmit={handleSubmit}>
             <FormControl margin='normal' required fullWidth>
