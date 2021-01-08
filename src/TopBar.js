@@ -17,8 +17,7 @@ const useStyles = makeStyles((theme) => ({
 
 function TopBar(props) {
   const classes = useStyles();
-  const { toggleDrawer } = props;
-  const [auth, setAuth] = useState(true);
+  const [auth, setAuth] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
@@ -39,19 +38,10 @@ function TopBar(props) {
     <div className={classes.root}>
       <AppBar position='fixed'>
         <Toolbar>
-          <IconButton
-            edge='start'
-            className={classes.menuButton}
-            color='inherit'
-            aria-label='menu'
-            onClick={toggleDrawer(true)}
-          >
-            <MenuIcon />
-          </IconButton>
           <Typography variant='h6' className={classes.title}>
             paws for pals
           </Typography>
-          {auth && (
+          {auth ? (
             <div>
               <IconButton
                 aria-label='account of current user'
@@ -81,7 +71,7 @@ function TopBar(props) {
                 <MenuItem onClick={handleClose}>My account</MenuItem>
               </Menu>
             </div>
-          )}
+          ) : null}
         </Toolbar>
       </AppBar>
     </div>
