@@ -16,14 +16,9 @@ import { withStyles } from '@material-ui/core/styles';
 import ZipCodeModal from './ZipCodeModal';
 
 function OptionsModal(props) {
-  const { classes, open, setOpen, setOptions, setAnimal } = props;
-  const [type, setType] = useState('Dog');
-  const [age, setAge] = useState({
-    baby: true,
-    young: true,
-    adult: true,
-    senior: true,
-  });
+  const { classes, open, setOpen, setOptions, setAnimal, initialType, initialOptions } = props;
+  const [type, setType] = useState(initialType);
+  const [age, setAge] = useState(initialOptions.age);
   const [locationType, setLocationType] = useState('Any');
   const [location, setLocation] = useState(null);
 
