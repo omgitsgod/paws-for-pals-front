@@ -7,7 +7,14 @@ import './App.css';
 
 function App() {
   const [type, setType] = useState('Dog');
-  const [options, setOptions] = useState({});
+  const [options, setOptions] = useState({
+    age: {
+      baby: true,
+      young: true,
+      adult: true,
+      senior: true,
+    },
+  });
   const [modal, setModal] = useState(true);
   console.log(options)
   const wakeUp = () => {
@@ -29,7 +36,7 @@ function App() {
         {!modal ? (
           <PetCardContainer type={type} options={options} />
         ) : (
-          <ModalContainer open={modal} setOpen={setModal} setOptions={setOptions} setAnimal={setType}/>
+          <ModalContainer open={modal} setOpen={setModal} setOptions={setOptions} setAnimal={setType} initialType={type} initialOptions={options} />
         )}
         <SpeedDialMenu onClickActions={onClickActions} />
       </header>
