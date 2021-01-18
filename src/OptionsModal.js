@@ -31,21 +31,11 @@ function OptionsModal(props) {
   const handleLocationType = (e) => {
     setLocationType(e.target.value);
   };
-  const handleAgeString = (input) => {
-    let age = '';
-    for (const entry in input) {
-      if (input[entry]) {
-        age += `${entry},`;
-      }
-    }
-    return age.slice(0, -1);
-  };
   const handleSubmit = (e) => {
     e.preventDefault();
     const tempOptions = {};
     const type = e.target.type.value;
-    const ageString = handleAgeString(age);
-    tempOptions.age = ageString;
+    tempOptions.age = age
     if (location) {
       tempOptions.location = location;
     }
