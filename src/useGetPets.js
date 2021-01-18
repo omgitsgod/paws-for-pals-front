@@ -1,13 +1,21 @@
 import React, { useEffect, useReducer } from 'react';
 
+const handleAgeString = (input) => {
+  let age = '';
+  for (const entry in input) {
+    if (input[entry]) {
+      age += `${entry},`;
+    }
+  }
+  return age.slice(0, -1);
+};
 const handleOptions = (input) => {
   let options = '';
   for (const entry in input) {
-    options += `${entry}=${input[entry]}&`;
+    options += `${entry}=${entry === 'age' ? handleAgeString(input[entry]) : input[entry]}&`;
   }
   return options.slice(0, -1);
 };
-
 const formatData = (data) => {
   let result = [];
   for (let i = 0; i < data.length; i += 10) {
@@ -16,7 +24,6 @@ const formatData = (data) => {
   }
   return result;
 };
-
 const dataFetchReducer = (state, action) => {
   switch (action.type) {
     case 'SET_TYPE':
@@ -73,7 +80,6 @@ function useGetPets(initialType, initialOptions) {
     visableData: [],
     page: 0,
   });
-
   const setOptions = (options) => {
     dispatch({ type: 'SET_OPTIONS', payload: options });
   };
@@ -83,7 +89,6 @@ function useGetPets(initialType, initialOptions) {
   const nextPage = () => {
     dispatch({ type: 'NEXT_PAGE'})
   }
-
   useEffect(() => {
     let cancelRequest = false;
     const getPets = async () => {
@@ -101,9 +106,7 @@ function useGetPets(initialType, initialOptions) {
         dispatch({ type: 'FETCH_FAILURE' });
       }
     };
-
     getPets();
-
     return () => {
       cancelRequest = true;
     };
