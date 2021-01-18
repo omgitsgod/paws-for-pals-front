@@ -4,7 +4,7 @@ import OptionsModal from './OptionsModal';
 import { withStyles } from '@material-ui/core/styles';
 
 function ModalContainer(props) {
-  const { classes, open, setOpen, setAnimal, setOptions, initialType={initialType}, initialOptions={initialOptions} } = props;
+  const { classes, open, setOpen, setAnimal, setOptions, initialType, initialOptions } = props;
 
   return (
     <Modal
