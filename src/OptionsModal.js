@@ -19,8 +19,8 @@ function OptionsModal(props) {
   const { classes, open, setOpen, setOptions, setAnimal, initialType, initialOptions } = props;
   const [type, setType] = useState(initialType);
   const [age, setAge] = useState(initialOptions.age);
-  const [locationType, setLocationType] = useState('Any');
-  const [location, setLocation] = useState(null);
+  const [locationType, setLocationType] = useState(initialOptions.location ? 'Zip' : 'Any');
+  const [location, setLocation] = useState(initialOptions.location ? initialOptions.location : null);
 
   const handleType = (e) => {
     setType(e.target.value);
@@ -194,7 +194,7 @@ function OptionsModal(props) {
               <FormControl margin='normal' required fullWidth>
                 <FormLabel component='legend'>Distance</FormLabel>
                 <Slider
-                  defaultValue={10}
+                  defaultValue={initialOptions.distance ? parseInt(initialOptions.distance) : 10}
                   getAriaValueText={valueText}
                   name='distance'
                   aria-labelledby='distance'
