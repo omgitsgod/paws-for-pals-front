@@ -12,6 +12,7 @@ const handleAgeString = (input) => {
 const handleOptions = (input) => {
   let options = '';
   for (const entry in input) {
+    if (entry === 'type') {continue}
     options += `${entry}=${entry === 'age' ? handleAgeString(input[entry]) : input[entry]}&`;
   }
   return options.slice(0, -1);
