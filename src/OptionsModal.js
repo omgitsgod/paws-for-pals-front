@@ -12,12 +12,22 @@ import {
   Radio,
   Slider,
 } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import ZipCodeModal from './ZipCodeModal';
 
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
+}));
+
 function OptionsModal(props) {
-  const { classes, open, setOpen, setOptions, setAnimal, initialType, initialOptions } = props;
-  const [type, setType] = useState(initialType);
+  const { open, setOpen, setOptions, initialOptions } = props;
+  const classes = useStyles();
+  const [type, setType] = useState(initialOptions.type);
   const [age, setAge] = useState(initialOptions.age);
   const [locationType, setLocationType] = useState(initialOptions.location ? 'Zip' : 'Any');
   const [location, setLocation] = useState(initialOptions.location ? initialOptions.location : null);
@@ -35,7 +45,8 @@ function OptionsModal(props) {
     e.preventDefault();
     const tempOptions = {};
     const type = e.target.type.value;
-    tempOptions.age = age
+    tempOptions.type = type;
+    tempOptions.age = age;
     if (location) {
       tempOptions.location = location;
     }
@@ -43,7 +54,6 @@ function OptionsModal(props) {
       tempOptions.distance = e.target.distance.value;
     }
     setOptions(tempOptions);
-    setAnimal(type);
     console.log(tempOptions);
     setOpen(false);
   };
@@ -190,7 +200,7 @@ function OptionsModal(props) {
                 )}
               </RadioGroup>
             </FormControl>
-            {locationType == 'Zip' ? (
+            {locationType === 'Zip' ? (
               <FormControl margin='normal' required fullWidth>
                 <FormLabel component='legend'>Distance</FormLabel>
                 <Slider
@@ -225,13 +235,4 @@ function OptionsModal(props) {
   }
 }
 
-const styles = (theme) => ({
-  paper: {
-    backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-});
-
-export default withStyles(styles)(OptionsModal);
+export default OptionsModal;
