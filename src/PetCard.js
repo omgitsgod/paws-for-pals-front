@@ -57,7 +57,7 @@ const PetCard = ({ i, x, y, rot, scale, trans, bind, cards }) => {
           transform: interpolate([rot, scale], trans),
         }}
       >
-        <img src={photo} className={classes.img} alt='Pet photo' />
+        <img src={photo} className={classes.img} alt='Pal' />
         <Typography variant={nameVariant} align='left'>
           {name}
         </Typography>
