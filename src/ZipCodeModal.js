@@ -10,10 +10,20 @@ import {
   Divider,
 } from '@material-ui/core';
 import { GpsFixedTwoTone as LocationIcon } from '@material-ui/icons';
-import { withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
+}));
 
 function ZipCodeModal(props) {
-  const { classes, open, setZip } = props;
+  const { open, setZip } = props;
+  const classes = useStyles();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -63,13 +73,4 @@ function ZipCodeModal(props) {
   );
 }
 
-const styles = (theme) => ({
-  paper: {
-    backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-});
-
-export default withStyles(styles)(ZipCodeModal);
+export default ZipCodeModal;
