@@ -1,10 +1,26 @@
 import React from 'react';
 import { Modal, Backdrop } from '@material-ui/core';
 import OptionsModal from './OptionsModal';
-import { withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  modal: {
+    height: '-200px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  paper: {
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
+}));
 
 function ModalContainer(props) {
-  const { classes, open, setOpen, setAnimal, setOptions, initialType, initialOptions } = props;
+  const { open, setOpen, setOptions, initialOptions } = props;
+  const classes = useStyles();
 
   return (
     <Modal
@@ -23,8 +39,6 @@ function ModalContainer(props) {
           open={open}
           setOpen={setOpen}
           setOptions={setOptions}
-          setAnimal={setAnimal}
-          initialType={initialType}
           initialOptions={initialOptions}
         />
       </>
@@ -32,19 +46,4 @@ function ModalContainer(props) {
   );
 }
 
-const styles = (theme) => ({
-  modal: {
-    height: '-200px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  paper: {
-    backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-});
-
-export default withStyles(styles)(ModalContainer);
+export default ModalContainer;
