@@ -6,8 +6,8 @@ import ModalContainer from './ModalContainer';
 import './App.css';
 
 function App() {
-  const [type, setType] = useState('Dog');
   const [options, setOptions] = useState({
+    type: 'Dog',
     age: {
       baby: true,
       young: true,
@@ -22,8 +22,8 @@ function App() {
   };
   const onClickActions = {
     changeOptions: () => setModal(true),
-    getDogs: () => setType('Dog'),
-    getCats: () => setType('Cat'),
+    getDogs: () => setOptions({...options, type: 'Dog'}),
+    getCats: () => setOptions({...options, type: 'Cat'}),
   };
   useEffect(() => {
     wakeUp();
@@ -34,9 +34,9 @@ function App() {
       {!modal ? <TopBar /> : null}
       <header className='Content'>
         {!modal ? (
-          <PetCardContainer type={type} options={options} />
+          <PetCardContainer key={options.type} type={options.type} options={options} />
         ) : (
-          <ModalContainer open={modal} setOpen={setModal} setOptions={setOptions} setAnimal={setType} initialType={type} initialOptions={options} />
+          <ModalContainer open={modal} setOpen={setModal} setOptions={setOptions} initialOptions={options} />
         )}
         <SpeedDialMenu onClickActions={onClickActions} />
       </header>
