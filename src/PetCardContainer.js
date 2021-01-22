@@ -30,6 +30,8 @@ function PetCardContainer(props) {
   const handleTimeout = () => {
     liked.clear();
     disliked.clear();
+    set((i) => to(i));
+    nextPage();
   };
   const bind = useDrag(
     ({
