@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, Toolbar, Typography, IconButton, Menu, MenuItem } from '@material-ui/core';
-import { Menu as MenuIcon, AccountCircle } from '@material-ui/icons';
+import { AccountCircle } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function TopBar(props) {
+function TopBar() {
   const classes = useStyles();
   const [auth, setAuth] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
