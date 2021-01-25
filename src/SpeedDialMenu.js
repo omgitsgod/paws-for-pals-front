@@ -17,8 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SpeedDialMenu(props) {
-  const { onClickActions } = props;
+function SpeedDialMenu({ onClickActions }) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
@@ -28,19 +27,16 @@ function SpeedDialMenu(props) {
     { icon: <CatIcon />, name: 'Cats', action: onClickActions.getCats },
     { icon: <DogIcon />, name: 'Dogs', action: onClickActions.getDogs },
     ];
-
   const handleOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
   };
-
   return (
     <div className={classes.root}>
       <SpeedDial
-        ariaLabel='Choose pet'
+        ariaLabel='Speeddial'
         className={classes.speedDial}
         hidden={hidden}
         icon={<Pets />}
@@ -56,6 +52,9 @@ function SpeedDialMenu(props) {
             icon={action.icon}
             tooltipTitle={action.name}
             tooltipOpen
+            FabProps={{
+              'aria-label': action.name
+            }}
             onClick={() => {
               handleClose();
               action.action()}}
