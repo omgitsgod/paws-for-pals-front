@@ -18,8 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ModalContainer(props) {
-  const { open, setOpen, setOptions, initialOptions } = props;
+function ModalContainer({ open, setOpen, setOptions, initialOptions }) {
   const classes = useStyles();
 
   return (
