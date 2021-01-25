@@ -21,13 +21,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ZipCodeModal(props) {
-  const { open, setZip } = props;
+function ZipCodeModal({ open, setZip }) {
   const classes = useStyles();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const zipCode = e.target.zipcode.value;
     zipCode.match(/^\d{5}(-\d{4})?$/) ? setZip(zipCode) : console.log('nope');
   };
