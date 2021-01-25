@@ -24,8 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function OptionsModal(props) {
-  const { open, setOpen, setOptions, initialOptions } = props;
+function OptionsModal({ open, setOpen, setOptions, initialOptions }) {
   const classes = useStyles();
   const [type, setType] = useState(initialOptions.type);
   const [age, setAge] = useState(initialOptions.age);
