@@ -17,8 +17,7 @@ const trans = (r, s) =>
     r / 10
   }deg) rotateZ(${r}deg) scale(${s})`;
 
-function PetCardContainer(props) {
-  const { type, options } = props;
+function PetCardContainer({ type, options }) {
   const [disliked] = useState(() => new Set());
   const [liked] = useState(() => new Set());
   const [state, setType, setOptions, nextPage] = useGetPets(type, options);
