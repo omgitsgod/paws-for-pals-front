@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { SpeedDial, SpeedDialAction } from '@material-ui/lab';
 import { Pets, Tune } from '@material-ui/icons';
-import CatIcon from './CatIcon';
-import DogIcon from './DogIcon';
+import CatIcon from '../CatIcon';
+import DogIcon from '../DogIcon';
 
 const useStyles = makeStyles((theme) => ({
   root: {

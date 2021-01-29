@@ -44,7 +44,7 @@ function TopBar() {
           {auth ? (
             <div>
               <IconButton
-                aria-label='account of current user'
+                aria-label='account'
                 aria-controls='menu-appbar'
                 aria-haspopup='true'
                 onClick={handleMenu}

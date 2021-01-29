@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSprings } from 'react-spring';
 import { useDrag } from 'react-use-gesture';
-import useGetPets from './useGetPets';
+import useGetPets from '../hooks/useGetPets';
 import PetCard from './PetCard';
 
 const to = (i) => ({

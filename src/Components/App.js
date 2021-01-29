@@ -3,7 +3,7 @@ import TopBar from './TopBar';
 import SpeedDialMenu from './SpeedDialMenu';
 import PetCardContainer from './PetCardContainer';
 import ModalContainer from './ModalContainer';
-import './App.css';
+import '../App.css';
 
 function App() {
   const [options, setOptions] = useState({
