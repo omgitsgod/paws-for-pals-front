@@ -3,14 +3,17 @@ import ReactDOM from 'react-dom';
 import dotenv from 'dotenv';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import './index.css';
-import App from './App';
+import App from './Components/App';
 import * as serviceWorker from './serviceWorker';
 
 dotenv.config();
 
+const primaryFont = '"Architects Daughter", cursive';
+const secondaryFont = '"Shadows Into Light", cursive';
+
 const theme = createMuiTheme({
   typography: {
-    fontFamily: '"Architects Daughter", cursive',
+    fontFamily: primaryFont,
     button: {
       textTransform: 'none',
     },
