@@ -1,10 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { axe, toHaveNoViolations } from 'jest-axe';
-import TopBar from './TopBar';
-
-expect.extend(toHaveNoViolations);
+import { axe } from 'jest-axe';
+import TopBar from '../Components/TopBar';
 
 describe('TopBar', () => {
   test('should have site name', () => {
