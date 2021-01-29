@@ -1,9 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { axe, toHaveNoViolations } from 'jest-axe';
-import SpeedDialMenu from './SpeedDialMenu';
+import { axe } from 'jest-axe';
+import SpeedDialMenu from '../Components/SpeedDialMenu';
 
-expect.extend(toHaveNoViolations);
 const Ids = ['Dogs', 'Cats', 'Options'];
 
 describe('SpeeDialMenu', () => {
