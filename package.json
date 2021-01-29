@@ -17,6 +17,10 @@
     "react-scripts": "^4.0.1",
     "react-spring": "9.0.0-rc.2",
     "react-use-gesture": "8.0.0-beta.1"
+  },  "jest": {
+    "watchPathIgnorePatterns": [
+      "<rootDir>/src/__tests__/mockData"
+    ]
   },
   "scripts": {
     "start": "react-scripts start",
