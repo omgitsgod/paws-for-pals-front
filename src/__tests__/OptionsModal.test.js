@@ -80,11 +80,5 @@ describe('User', () => {
     testAgeClick(/young/i);
     testAgeClick(/adult/i);
     testAgeClick(/senior/i);
-  });  
-  test('should have ability to type in zip code input', () => {
-    render(<OptionsModal open={true} initialOptions={initialOptions} />);
-    const query = screen.getByRole('textbox', { name: /zip code/i });
-    userEvent.type(query, '10001');
-    expect(query).toHaveValue('10001');
   });
 });
