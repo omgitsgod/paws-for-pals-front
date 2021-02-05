@@ -15,7 +15,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "^4.0.1",
-    "react-spring": "9.0.0-rc.2",
+    "react-spring": "9.0.0-rc.3",
     "react-use-gesture": "8.0.0-beta.1"
   },  "jest": {
     "watchPathIgnorePatterns": [
@@ -26,7 +26,9 @@
     "start": "react-scripts start",
     "build": "CI=false react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "react-spring-issue-1078": "find node_modules -path \\*@react-spring/\\*/package.json -exec sed -i.bak 's/\"sideEffects\": false/\"sideEffects\": true/g' {} +",
+    "postinstall": "yarn react-spring-issue-1078"
   },
   "eslintConfig": {
     "extends": "react-app"
