@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { AppBar, Toolbar, Typography, IconButton, Menu, MenuItem } from '@material-ui/core';
-import { AccountCircle } from '@material-ui/icons';
+import { AppBar, Toolbar, Link, Typography, IconButton, Menu, MenuItem } from '@material-ui/core';
+import { AccountCircle, VpnKey } from '@material-ui/icons';
+import { googleAuthUrl } from '../config'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -13,18 +14,20 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
+  avatar: {
+  height: '48px',
+  width: '48px',
+  float: 'right',
+  borderRadius: '50%',
+}
+
 }));
 
-function TopBar() {
+function TopBar({ user, isAuthenticated, handleLogout }) {
   const classes = useStyles();
   const [auth, setAuth] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-
-  const handleChange = (event) => {
-    setAuth(event.target.checked);
-  };
-
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -41,17 +44,26 @@ function TopBar() {
           <Typography variant='h6' className={classes.title}>
             paws for pals
           </Typography>
-          {auth ? (
+          {isAuthenticated ? (
             <div>
-              <IconButton
-                aria-label='account'
-                aria-controls='menu-appbar'
-                aria-haspopup='true'
-                onClick={handleMenu}
-                color='inherit'
-              >
-                <AccountCircle />
-              </IconButton>
+              {user.photo ? (
+                <img
+                  className={classes.avatar}
+                  src={user.photo}
+                  alt={'avatar'}
+                  onClick={handleMenu}
+                />
+              ) : (
+                <IconButton
+                  aria-label='account'
+                  aria-controls='menu-appbar'
+                  aria-haspopup='true'
+                  onClick={handleMenu}
+                  color='inherit'
+                >
+                  <AccountCircle />
+                </IconButton>
+              )}
               <Menu
                 id='menu-appbar'
                 anchorEl={anchorEl}
@@ -69,9 +81,22 @@ function TopBar() {
               >
                 <MenuItem onClick={handleClose}>Profile</MenuItem>
                 <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={handleLogout}>Logout</MenuItem>
               </Menu>
             </div>
-          ) : null}
+          ) : (
+            <Link href={googleAuthUrl} color='inherit'>
+              <IconButton
+                aria-label='account'
+                aria-controls='menu-appbar'
+                aria-haspopup='true'
+                onClick={handleMenu}
+                color='inherit'
+              >
+                <VpnKey />
+              </IconButton>
+            </Link>
+          )}
         </Toolbar>
       </AppBar>
     </div>
