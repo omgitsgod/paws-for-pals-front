@@ -1,4 +1,5 @@
 import React, { useEffect, useReducer } from 'react';
+import { backHost } from '../config';
 
 const handleAgeString = (input) => {
   let age = '';
@@ -94,7 +95,6 @@ function useGetPets(initialType, initialOptions) {
     let cancelRequest = false;
     const getPets = async () => {
       dispatch({ type: 'FETCH_INIT' });
-      const backHost = process.env.REACT_APP_BACK_HOST;
       const url = `${backHost}/${state.type}?${handleOptions(state.options)}`;
       try {
         const result = await fetch(url).then((r) => r.json());
