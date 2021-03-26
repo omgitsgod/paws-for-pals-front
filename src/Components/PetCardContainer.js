@@ -3,6 +3,7 @@ import { useSprings } from 'react-spring';
 import { useDrag } from 'react-use-gesture';
 import useGetPets from '../hooks/useGetPets';
 import PetCard from './PetCard';
+import PetProfile from './PetProfile';
 
 const to = (i) => ({
   x: 0,
@@ -17,7 +18,7 @@ const trans = (r, s) =>
     r / 10
   }deg) rotateZ(${r}deg) scale(${s})`;
 
-function PetCardContainer({ type, options }) {
+function PetCardContainer({ type, options, handlePet, pet, selected }) {
   const [disliked] = useState(() => new Set());
   const [liked] = useState(() => new Set());
   const [state, setType, setOptions, nextPage] = useGetPets(type, options);
@@ -45,8 +46,8 @@ function PetCardContainer({ type, options }) {
       console.log('distance', distance);
       const dir = xDir < 0 ? -1 : 1;
       console.log(dir);
-      if (!down && trigger && xDir <= -0.5) disliked.add(index);
-      if (!down && trigger && xDir >= 0.5) liked.add(index);
+      if (!down && trigger && xDir <= -0.5) disliked.add(index) && handlePet(data, liked.size, disliked.size);
+      if (!down && trigger && xDir >= 0.5) liked.add(index) && handlePet(data, liked.size, disliked.size);
       console.log('liked', liked);
       console.log('disliked', disliked);
       set((i) => {
@@ -72,22 +73,38 @@ function PetCardContainer({ type, options }) {
     setType(type);
   }, [type]);
 
+  useEffect(() => {
+    if (data.length > 0) {
+    handlePet(data, liked.size, disliked.size);
+    console.log('pet: ', data[data.length - 1])
+    }
+  }, [data.length])
+
   if (isLoading) {
     return <p>loading...</p>;
-  } else if (data) {
-    return springProps.map(({ x, y, rot, scale }, i) => (
-      <PetCard
-        key={i}
-        i={i}
-        x={x}
-        y={y}
-        rot={rot}
-        scale={scale}
-        trans={trans}
-        cards={data}
-        bind={bind}
-      />
-    ));
+  } else if (selected === 'pet' && pet) {
+    return (
+      <PetProfile pet={pet} />
+    )
+  } else if (selected === 'list' && data) {
+    return (
+      <>
+        {springProps.map(({ x, y, rot, scale }, i) => (
+          <PetCard
+            key={i}
+            i={i}
+            x={x}
+            y={y}
+            rot={rot}
+            scale={scale}
+            trans={trans}
+            cards={data}
+            bind={bind}
+          />
+        ))}
+      </>);
+  } else {
+    return <p>Coming Soon</p>
   }
 }
 
