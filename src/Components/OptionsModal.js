@@ -53,6 +53,7 @@ function OptionsModal({ open, setOpen, setOptions, initialOptions }) {
       tempOptions.distance = e.target.distance.value;
     }
     setOptions(tempOptions);
+    localStorage.setItem('options', JSON.stringify(tempOptions));
     console.log(tempOptions);
     setOpen(false);
   };
