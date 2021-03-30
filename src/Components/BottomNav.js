@@ -10,7 +10,7 @@ const useStyles = makeStyles({
   nav: {
     width: 500,
     bottomMargin: -30,
-    positon: 'fixed',
+    positon: 'absolute',
     backgroundColor: '#282c34',
   },
 });
