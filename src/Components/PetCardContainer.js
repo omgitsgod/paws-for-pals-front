@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSprings } from 'react-spring';
 import { useDrag } from 'react-use-gesture';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import useGetPets from '../hooks/useGetPets';
 import PetCard from './PetCard';
 import PetProfile from './PetProfile';
@@ -80,8 +81,10 @@ function PetCardContainer({ type, options, handlePet, pet, selected }) {
     }
   }, [data.length])
 
-  if (isLoading) {
-    return <p>loading...</p>;
+  if (!data.length) {
+    return (
+      <CircularProgress style={{marginTop: '25%', height: '80px', width: '80px'}}/>
+    );
   } else if (selected === 'pet' && pet) {
     return (
       <PetProfile pet={pet} />
