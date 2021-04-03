@@ -11,19 +11,26 @@ Explore:
 
 ### Built With
 
-* [Petfinder API](https://www.petfinder.com/developers/v2/docs/)
-* React.js (front-end)
-* Node (back-end)
+* [Petfinder API is used for pets](https://www.petfinder.com/developers/v2/docs/)
+* [React.js is used for UI](https://reactjs.org/)
+* Material UI
+* [Node is used for the backend/server](https://nodejs.org)
+* Express
 
-### Setting up Dev
+### Install
 
 ```shell
 git clone https://github.com/omgitsgod/paws-for-pals-front.git
 cd paws-for-pals-front/
+yarn install
+```
+
+### Dev
+```shell
 yarn start
 ```
 
-### Building
+### Build
 
 ```shell
 yarn build
