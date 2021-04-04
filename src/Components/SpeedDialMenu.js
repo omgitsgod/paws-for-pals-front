@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { useMediaQuery } from '@material-ui/core';
 import { SpeedDial, SpeedDialAction } from '@material-ui/lab';
 import { Pets, Tune } from '@material-ui/icons';
 import CatIcon from '../CatIcon';
@@ -21,9 +22,10 @@ function SpeedDialMenu({ onClickActions }) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
+  const mobile = useMediaQuery('(max-width:600px)');
 
   const actions = [
-    { icon: <Tune />, name: 'Options', action: onClickActions.changeOptions},
+    { icon: <Tune />, name: 'Options', action: onClickActions.changeOptions },
     { icon: <CatIcon />, name: 'Cats', action: onClickActions.getCats },
     { icon: <DogIcon />, name: 'Dogs', action: onClickActions.getDogs },
     ];
@@ -43,7 +45,7 @@ function SpeedDialMenu({ onClickActions }) {
         onClose={handleClose}
         onOpen={handleOpen}
         open={open}
-        direction={'up'}
+        direction={mobile ? 'left' : 'up'}
         mr={-5}
       >
         {actions.map((action) => (
