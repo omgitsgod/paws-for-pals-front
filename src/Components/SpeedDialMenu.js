@@ -46,14 +46,13 @@ function SpeedDialMenu({ onClickActions }) {
         onOpen={handleOpen}
         open={open}
         direction={mobile ? 'left' : 'up'}
-        mr={-5}
       >
         {actions.map((action) => (
           <SpeedDialAction
             key={action.name}
             icon={action.icon}
             tooltipTitle={action.name}
-            tooltipOpen
+            tooltipOpen={!mobile}
             FabProps={{
               'aria-label': action.name
             }}
