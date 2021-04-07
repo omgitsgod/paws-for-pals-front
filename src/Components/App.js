@@ -89,8 +89,8 @@ function App() {
           />
         )}
         <SpeedDialMenu onClickActions={onClickActions} />
-        <BottomNav selected={selected} setSelected={setSelected} pet={pet} />
       </header>
+      <BottomNav selected={selected} setSelected={setSelected} pet={pet} />
     </div>
   );
 }
