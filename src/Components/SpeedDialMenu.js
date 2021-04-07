@@ -45,7 +45,7 @@ function SpeedDialMenu({ onClickActions }) {
         onClose={handleClose}
         onOpen={handleOpen}
         open={open}
-        direction={mobile ? 'left' : 'up'}
+        direction='up'
       >
         {actions.map((action) => (
           <SpeedDialAction
