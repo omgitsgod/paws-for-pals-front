@@ -8,9 +8,9 @@ import CatIcon from '../CatIcon';
 
 const useStyles = makeStyles({
   nav: {
-    width: 500,
-    bottomMargin: -30,
-    positon: 'absolute',
+    width: '100%',
+    bottom: '0px',
+    position: 'fixed',
     backgroundColor: '#282c34',
   },
 });
