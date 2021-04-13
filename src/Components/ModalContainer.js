@@ -5,7 +5,6 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
-    height: '-200px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
