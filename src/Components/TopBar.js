@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 
 function TopBar({ user, isAuthenticated, handleLogout }) {
   const classes = useStyles();
-  const [darkMode, setDarkMode] = useState(false)
+  const [darkMode, setDarkMode] = useState(localStorage.getItem('darkMode') === 'true' ? true : false);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
@@ -33,7 +33,12 @@ function TopBar({ user, isAuthenticated, handleLogout }) {
   };
 
   const handleToggle = () => {
-    setDarkMode(toggle => !toggle);
+    setDarkMode(toggle => {
+      const newToggle = !toggle;
+      localStorage.setItem('darkMode', newToggle);
+      console.log(localStorage.getItem('darkMode'))
+      return newToggle;
+    });
   }
 
   const handleClose = () => {
