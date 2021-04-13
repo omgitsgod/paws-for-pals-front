@@ -15,17 +15,16 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   avatar: {
-  height: '48px',
-  width: '48px',
-  float: 'right',
-  borderRadius: '50%',
-}
-
+    height: theme.spacing(6),
+    width: theme.spacing(6),
+    float: 'right',
+    borderRadius: '50%',
+  },
 }));
 
 function TopBar({ user, isAuthenticated, handleLogout }) {
   const classes = useStyles();
-  const [darkMode, setDarkMode] = useState(true)
+  const [darkMode, setDarkMode] = useState(false)
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
