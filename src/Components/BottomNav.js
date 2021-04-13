@@ -6,14 +6,14 @@ import { List, Store, Favorite } from '@material-ui/icons';
 import DogIcon from '../DogIcon';
 import CatIcon from '../CatIcon';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   nav: {
     width: '100%',
-    bottom: '0px',
+    bottom: theme.spacing(0),
     position: 'fixed',
     backgroundColor: 'white',
   },
-});
+}));
 
 function BottomNav({ selected, setSelected, pet }) {
   const classes = useStyles();
