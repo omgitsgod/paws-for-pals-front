@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { AppBar, Toolbar, Link, Typography, IconButton, Menu, MenuItem } from '@material-ui/core';
-import { AccountCircle, VpnKey } from '@material-ui/icons';
+import { AppBar, Toolbar, Link, Typography, IconButton, Menu, MenuItem, Switch } from '@material-ui/core';
+import { AccountCircle, VpnKey, WbSunny, Brightness2 } from '@material-ui/icons';
 import { googleAuthUrl } from '../config'
 
 const useStyles = makeStyles((theme) => ({
@@ -25,13 +25,17 @@ const useStyles = makeStyles((theme) => ({
 
 function TopBar({ user, isAuthenticated, handleLogout }) {
   const classes = useStyles();
-  const [auth, setAuth] = useState(false);
+  const [darkMode, setDarkMode] = useState(true)
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
+  const handleToggle = () => {
+    setDarkMode(toggle => !toggle);
+  }
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -41,6 +45,15 @@ function TopBar({ user, isAuthenticated, handleLogout }) {
     <div className={classes.root}>
       <AppBar position='fixed'>
         <Toolbar>
+          <Switch
+            checked={darkMode}
+            checkedIcon={<Brightness2 />}
+            icon={<WbSunny />}
+            onChange={handleToggle}
+            color='inherit'
+            name='dark mode'
+            inputProps={{ 'aria-label': 'dark mode' }}
+          />
           <Typography variant='h6' className={classes.title}>
             paws for pals
           </Typography>
