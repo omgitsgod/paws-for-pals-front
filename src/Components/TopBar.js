@@ -15,8 +15,8 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   avatar: {
-    height: theme.spacing(6),
-    width: theme.spacing(6),
+    height: theme.spacing(5),
+    width: theme.spacing(5),
     float: 'right',
     borderRadius: '50%',
   },
