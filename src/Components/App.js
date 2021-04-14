@@ -22,6 +22,7 @@ function App() {
   const [modal, setModal] = useState(localStorage.getItem('options') ? false : true);
   const [selected, setSelected] = useState('list');
   const [pet, setPet] = useState({});
+  const [darkMode, setDarkMode] = useState(localStorage.getItem('darkMode') === 'true' ? true : false);
 
   console.log(options)
   const login = (user) => {
@@ -68,6 +69,8 @@ function App() {
           isAuthenticated={isAuthenticated}
           user={user}
           handleLogout={handleLogout}
+          darkMode={darkMode}
+          setDarKmode={setDarkMode}
         />
       ) : null}
       <header className='Content'>
