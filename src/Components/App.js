@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import TopBar from './TopBar';
 import SpeedDialMenu from './SpeedDialMenu';
 import BottomNav from './BottomNav'
 import PetCardContainer from './PetCardContainer';
 import ModalContainer from './ModalContainer';
 import '../App.css';
+import { dark, light } from '../theme';
 import { backHost, removeHash } from '../config';
 
 function App() {
@@ -22,9 +24,11 @@ function App() {
   const [modal, setModal] = useState(localStorage.getItem('options') ? false : true);
   const [selected, setSelected] = useState('list');
   const [pet, setPet] = useState({});
-  const [darkMode, setDarkMode] = useState(localStorage.getItem('darkMode') === 'true' ? true : false);
+  const [darkMode, setDarkMode] = useState(
+    localStorage.getItem('darkMode') === 'true' ? true : false
+  );
+  const theme = createMuiTheme(darkMode ? dark : light);
 
-  console.log(options)
   const login = (user) => {
     setUser(user);
     setIsAuthenticated(true);
@@ -63,38 +67,40 @@ function App() {
   }, []);
   console.log(selected)
   return (
-    <div className='App'>
-      {!modal ? (
-        <TopBar
-          isAuthenticated={isAuthenticated}
-          user={user}
-          handleLogout={handleLogout}
-          darkMode={darkMode}
-          setDarKmode={setDarkMode}
-        />
-      ) : null}
-      <header className='Content'>
+    <ThemeProvider theme={theme}>
+      <div className='App'>
         {!modal ? (
-          <PetCardContainer
-            key={options.type}
-            type={options.type}
-            options={options}
-            handlePet={handlePet}
-            pet={pet}
-            selected={selected}
+          <TopBar
+            isAuthenticated={isAuthenticated}
+            user={user}
+            handleLogout={handleLogout}
+            darkMode={darkMode}
+            setDarkMode={setDarkMode}
           />
-        ) : (
-          <ModalContainer
-            open={modal}
-            setOpen={setModal}
-            setOptions={setOptions}
-            initialOptions={options}
-          />
-        )}
-        <SpeedDialMenu onClickActions={onClickActions} />
-      </header>
-      <BottomNav selected={selected} setSelected={setSelected} pet={pet} />
-    </div>
+        ) : null}
+        <header className='Content'>
+          {!modal ? (
+            <PetCardContainer
+              key={options.type}
+              type={options.type}
+              options={options}
+              handlePet={handlePet}
+              pet={pet}
+              selected={selected}
+            />
+          ) : (
+            <ModalContainer
+              open={modal}
+              setOpen={setModal}
+              setOptions={setOptions}
+              initialOptions={options}
+            />
+          )}
+          <SpeedDialMenu onClickActions={onClickActions} />
+        </header>
+        <BottomNav selected={selected} setSelected={setSelected} pet={pet} />
+      </div>
+    </ThemeProvider>
   );
 }
 
