@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh',
     willChange: 'transform',
     display: 'flex',
-    alignItems: 'center',
+    marginTop: '20vh',
     justifyContent: 'center',
   },
   img: {
