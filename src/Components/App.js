@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import GlobalStyles from '../GlobalStyles';
+import useDarkMode from '../hooks/useDarkMode';
 import TopBar from './TopBar';
 import SpeedDialMenu from './SpeedDialMenu';
 import BottomNav from './BottomNav'
 import PetCardContainer from './PetCardContainer';
 import ModalContainer from './ModalContainer';
-import '../App.css';
 import { dark, light } from '../theme';
 import { backHost, removeHash } from '../config';
 
@@ -24,9 +25,7 @@ function App() {
   const [modal, setModal] = useState(localStorage.getItem('options') ? false : true);
   const [selected, setSelected] = useState('list');
   const [pet, setPet] = useState({});
-  const [darkMode, setDarkMode] = useState(
-    localStorage.getItem('darkMode') === 'true' ? true : false
-  );
+  const [darkMode, setDarkMode] = useDarkMode();
   const theme = createMuiTheme(darkMode ? dark : light);
 
   const login = (user) => {
@@ -66,8 +65,10 @@ function App() {
     handleLogin();
   }, []);
   console.log(selected)
+  console.log(theme)
   return (
     <ThemeProvider theme={theme}>
+      <GlobalStyles />
       <div className='App'>
         {!modal ? (
           <TopBar
@@ -78,7 +79,7 @@ function App() {
             setDarkMode={setDarkMode}
           />
         ) : null}
-        <header className='Content'>
+        <div className='Content'>
           {!modal ? (
             <PetCardContainer
               key={options.type}
@@ -97,7 +98,7 @@ function App() {
             />
           )}
           <SpeedDialMenu onClickActions={onClickActions} />
-        </header>
+        </div>
         <BottomNav selected={selected} setSelected={setSelected} pet={pet} />
       </div>
     </ThemeProvider>
