@@ -23,10 +23,10 @@ const useStyles = makeStyles((theme) => ({
     color: 'gray',
   },
   description: {
-    color: '#393535',
+    color: theme.palette.type === 'light' ? '#393535' :'rgba(255, 255, 255, 0.7)'
   },
   card: {
-    backgroundColor: 'white',
+    backgroundColor: theme.palette.type === 'light' ? 'white' : '#424242',
     padding: '5px',
     width: '45vh',
     maxWidth: '300px',
