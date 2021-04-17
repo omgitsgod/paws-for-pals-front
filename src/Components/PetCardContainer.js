@@ -83,7 +83,7 @@ function PetCardContainer({ type, options, handlePet, pet, selected }) {
 
   if (!data.length) {
     return (
-      <CircularProgress style={{marginTop: '25%', height: '80px', width: '80px'}}/>
+      <CircularProgress style={{marginTop: '40vh', height: '80px', width: '80px'}}/>
     );
   } else if (selected === 'pet' && pet) {
     return (
