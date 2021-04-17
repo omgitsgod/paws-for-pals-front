@@ -1,11 +1,11 @@
-import { createMuiTheme } from '@material-ui/core/styles';
-
 const primaryFont = '"Architects Daughter", cursive';
 const secondaryFont = '"Shadows Into Light", cursive';
 
 export const dark = {
   palette: {
     type: 'dark',
+    primary: {
+      main: '#365c48'},
   },
   typography: {
     fontFamily: primaryFont,
@@ -18,6 +18,9 @@ export const dark = {
 export const light = {
   palette: {
     type: 'light',
+    primary: {
+      main: '#3f51b5'
+    },
   },
   typography: {
     fontFamily: primaryFont,
