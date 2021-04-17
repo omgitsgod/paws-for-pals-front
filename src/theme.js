@@ -5,7 +5,8 @@ export const dark = {
   palette: {
     type: 'dark',
     primary: {
-      main: '#365c48'},
+      main: '#335c81',
+    },
   },
   typography: {
     fontFamily: primaryFont,
