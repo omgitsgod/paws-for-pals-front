@@ -23,7 +23,8 @@ const useStyles = makeStyles((theme) => ({
     color: 'gray',
   },
   description: {
-    color: theme.palette.type === 'light' ? '#393535' :'rgba(255, 255, 255, 0.7)'
+    color:
+      theme.palette.type === 'light' ? '#393535' : 'rgba(255, 255, 255, 0.7)',
   },
   card: {
     backgroundColor: theme.palette.type === 'light' ? 'white' : '#424242',
@@ -36,7 +37,9 @@ const useStyles = makeStyles((theme) => ({
     color: 'black',
     borderRadius: '10px',
     boxShadow:
-      '0 12.5px 100px -10px rgba(50, 50, 73, 0.4), 0 10px 10px -10px rgba(50, 50, 73, 0.3)',
+      theme.palette.type === 'light' ? '0 12.5px 100px -10px rgba(50, 50, 73, 0.4), 0 10px 10px -10px rgba(50, 50, 73, 0.3)' : null,
+    borderColor: 'rgba(255, 255, 255, 0.7)',
+    borderStyle: 'solid'
   },
 }));
 
