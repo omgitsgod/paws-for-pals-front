@@ -19,7 +19,7 @@ export const light = {
   palette: {
     type: 'light',
     primary: {
-      main: '#3f51b5'
+      main: '#335c81',
     },
   },
   typography: {
