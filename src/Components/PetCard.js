@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.type === 'light' ? 'white' : '#424242',
     padding: '5px',
     width: '45vh',
+    overflow: 'hidden',
     maxWidth: '300px',
     height: '85vh',
     maxHeight: '570px',
