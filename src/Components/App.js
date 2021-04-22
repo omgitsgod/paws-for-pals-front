@@ -6,6 +6,7 @@ import TopBar from './TopBar';
 import SpeedDialMenu from './SpeedDialMenu';
 import BottomNav from './BottomNav'
 import PetCardContainer from './PetCardContainer';
+import FavoriteContainer from './FavoriteContainer';
 import ModalContainer from './ModalContainer';
 import { dark, light } from '../theme';
 import { backHost, removeHash } from '../config';
@@ -80,7 +81,7 @@ function App() {
           />
         ) : null}
         <div className='Content'>
-          {!modal ? (
+          {!modal ? selected !== 'favorites' ? (
             <PetCardContainer
               key={options.type}
               type={options.type}
@@ -89,7 +90,7 @@ function App() {
               pet={pet}
               selected={selected}
             />
-          ) : (
+          ) : <FavoriteContainer /> : (
             <ModalContainer
               open={modal}
               setOpen={setModal}
