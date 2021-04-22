@@ -5,6 +5,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import useGetPets from '../hooks/useGetPets';
 import PetCard from './PetCard';
 import PetProfile from './PetProfile';
+import { backHost } from '../config';
 
 const to = (i) => ({
   x: 0,
@@ -34,6 +35,28 @@ function PetCardContainer({ type, options, handlePet, pet, selected }) {
     set((i) => to(i));
     nextPage();
   };
+  const saveToDatabase = async (item) => {
+    console.log(item)
+    const success = await fetch(`${backHost}/save_favorite`, {
+      method: 'POST',
+      credentials: 'include',
+      body: JSON.stringify(item),
+      headers: {
+      'Content-Type': 'application/json'
+      }
+    }).then((r) => r.json());
+  }
+  const addPetLiked = (index) => {
+    const selectedPet = data[index];
+    liked.add(selectedPet)
+    saveToDatabase(selectedPet)
+    handlePet(data, liked.size, disliked.size);
+  }
+  const addPetDisliked = (index) => {
+    const selectedPet = data[index];
+    disliked.add(selectedPet);
+    handlePet(data, liked.size, disliked.size);
+  }
   const bind = useDrag(
     ({
       args: [index],
@@ -47,13 +70,13 @@ function PetCardContainer({ type, options, handlePet, pet, selected }) {
       console.log('distance', distance);
       const dir = xDir < 0 ? -1 : 1;
       console.log(dir);
-      if (!down && trigger && xDir <= -0.5) disliked.add(index) && handlePet(data, liked.size, disliked.size);
-      if (!down && trigger && xDir >= 0.5) liked.add(index) && handlePet(data, liked.size, disliked.size);
-      console.log('liked', liked);
+      if (!down && trigger && xDir <= -0.5) addPetDisliked(index);
+      if (!down && trigger && xDir >= 0.5) addPetLiked(index);
+      console.log('liked', liked)
       console.log('disliked', disliked);
       set((i) => {
         if (index !== i) return;
-        const isGone = disliked.has(index) || liked.has(index);
+        const isGone = disliked.has(data[index]) || liked.has(data[index]);
         const x = isGone ? (200 + window.innerWidth) * dir : down ? mx : 0;
         const rot = mx / 100 + (isGone ? dir * 10 * velocity : 0);
         const scale = down ? 1.1 : 1;
