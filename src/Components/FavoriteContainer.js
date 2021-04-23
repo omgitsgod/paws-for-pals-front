@@ -7,7 +7,7 @@ const useStyles = makeStyles({
   organize: {
     position: 'absolute',
     width: '100vw',
-    height: '100vh',
+    height: '70vh',
     willChange: 'transform',
     display: 'flex',
     marginTop: '20vh',
@@ -28,6 +28,13 @@ function FavoriteContainer() {
     console.log('favorites', data);
     setFavorites(data);
   }
+  const deleteFavorite = async (item) => {
+    const url = `${backHost}/delete_favorite?id=${item}`;
+    const data = await fetch(url, {
+      method: 'POST',
+      credentials: 'include',
+    }).then(fetchFavorites);
+  }
   useEffect( () => {
     fetchFavorites();
   }, [])
@@ -36,7 +43,10 @@ function FavoriteContainer() {
       <Grid container spacing={3}>
         {favorites.map((fav) => (
           <Grid item xs={12} sm={3}>
-          <img src={fav.primary_photo_cropped.small} key={fav.id} />
+            <img src={fav.primary_photo_cropped.small} key={fav.id} />
+            <button onClick={() => deleteFavorite(fav.id)}>
+              Delete
+            </button>
           </Grid>
         ))}
       </Grid>
