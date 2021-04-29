@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import FavoriteCard from './FavoriteCard';
 import { backHost } from '../config';
 
 const useStyles = makeStyles({
   organize: {
-    position: 'absolute',
     width: '100vw',
-    height: '70vh',
+    height: '100vh',
     willChange: 'transform',
     display: 'flex',
-    marginTop: '20vh',
+    marginTop: '10vh',
     justifyContent: 'center',
     overflow: 'scroll',
   },
@@ -28,27 +28,17 @@ function FavoriteContainer() {
     console.log('favorites', data);
     setFavorites(data);
   }
-  const deleteFavorite = async (item) => {
-    const url = `${backHost}/delete_favorite?id=${item}`;
-    const data = await fetch(url, {
-      method: 'POST',
-      credentials: 'include',
-    }).then(fetchFavorites);
-  }
   useEffect( () => {
     fetchFavorites();
   }, [])
+  const favoriteCards = favorites.map((fav) => (
+    <FavoriteCard fav={fav} key={fav.id} fetchFavorites={fetchFavorites} />
+  ));
+  
   return (
     <div className={classes.organize}>
       <Grid container spacing={3}>
-        {favorites.map((fav) => (
-          <Grid item xs={12} sm={3}>
-            <img src={fav.primary_photo_cropped.small} key={fav.id} />
-            <button onClick={() => deleteFavorite(fav.id)}>
-              Delete
-            </button>
-          </Grid>
-        ))}
+        {favoriteCards}
       </Grid>
     </div>
   );
