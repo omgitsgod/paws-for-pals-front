@@ -7,11 +7,10 @@ import { backHost } from '../config';
 const useStyles = makeStyles({
   organize: {
     width: '100vw',
-    height: '100vh',
+    height: '80vh',
     willChange: 'transform',
     display: 'flex',
     marginTop: '10vh',
-    justifyContent: 'center',
     overflow: 'scroll',
   },
 });
