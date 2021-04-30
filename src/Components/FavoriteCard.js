@@ -5,8 +5,7 @@ import { useSpring, a } from '@react-spring/web';
 import { backHost } from '../config';
 
 const useStyles = makeStyles({
-  c: {
-    position: 'absolute',
+  card: {
     cursor: 'pointer',
     willChange: 'transform, opacity',
     margin: '20px',
@@ -43,25 +42,25 @@ function FavoriteCard({ fav, fetchFavorites }) {
   };
   return (
     <Grid item xs={12} sm={3}>
-      <div style={{position: 'relative'}}>
-      <a.div
-        className={`${classes.c} ${classes.back}`}
-        style={{ opacity: opacity.to((o) => 1 - o), transform }}
-        onClick={() => setFlipped((state) => !state)}
-      >
-      </a.div>
-      <a.div
-        className={`${classes.c} ${classes.front}`}
-        style={{
-          opacity,
-          transform,
-          rotateX: '180deg',
-        }}
-        onClick={() => setFlipped((state) => !state)}
-      >
-        <button onClick={() => deleteFavorite(fav.id)}>Delete</button>
-      </a.div>
-      </div>
+        {!flipped ? (
+          <a.div
+            className={`${classes.card} ${classes.back}`}
+            style={{ opacity: opacity.to((o) => 1 - o), transform }}
+            onClick={() => setFlipped((state) => !state)}
+          ></a.div>
+        ) : (
+          <a.div
+            className={`${classes.card} ${classes.front}`}
+            style={{
+              opacity,
+              transform,
+              rotateX: '180deg',
+            }}
+            onClick={() => setFlipped((state) => !state)}
+          >
+            <button onClick={() => deleteFavorite(fav.id)}>Delete</button>
+          </a.div>
+        )}
     </Grid>
   );
 }
