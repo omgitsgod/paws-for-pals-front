@@ -15,7 +15,7 @@ const useStyles = makeStyles({
   },
 });
 
-function FavoriteContainer() {
+function FavoriteContainer({ handleFavoritePet }) {
   const classes = useStyles();
   const [favorites, setFavorites] = useState([]);
   const fetchFavorites = async () => {
@@ -31,7 +31,7 @@ function FavoriteContainer() {
     fetchFavorites();
   }, [])
   const favoriteCards = favorites.map((fav) => (
-    <FavoriteCard fav={fav} key={fav.id} fetchFavorites={fetchFavorites} />
+    <FavoriteCard fav={fav} key={fav.id} fetchFavorites={fetchFavorites} handleFavoritePet={handleFavoritePet} />
   ));
   
   return (
