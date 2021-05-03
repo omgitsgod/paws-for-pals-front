@@ -56,6 +56,10 @@ function App() {
     console.log('less: ', less)
     setPet(less >= 0 ? data[less] : {})
   }
+  const handleFavoritePet = (fav) => {
+    setSelected('pet');
+    setPet(fav);
+  }
   const onClickActions = {
     changeOptions: () => setModal(true),
     getDogs: () => setOptions({...options, type: 'Dog'}),
@@ -90,7 +94,7 @@ function App() {
               pet={pet}
               selected={selected}
             />
-          ) : <FavoriteContainer /> : (
+          ) : <FavoriteContainer handleFavoritePet={handleFavoritePet} /> : (
             <ModalContainer
               open={modal}
               setOpen={setModal}
