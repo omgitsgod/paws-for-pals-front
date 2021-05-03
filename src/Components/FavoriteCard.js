@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSpring, a } from '@react-spring/web';
 import { backHost } from '../config';
@@ -22,6 +22,12 @@ const useStyles = makeStyles({
       `linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(${fav.primary_photo_cropped.small})`,
     height: '380px',
     width: '85%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  button: {
+    margin: '10%',
   },
 });
 
@@ -33,8 +39,8 @@ function FavoriteCard({ fav, fetchFavorites }) {
     transform: `perspective(600px) rotateX(${flipped ? 180 : 0}deg)`,
     config: { mass: 5, tension: 500, friction: 80 },
   });
-  const deleteFavorite = async (item) => {
-    const url = `${backHost}/delete_favorite?id=${item}`;
+  const deleteFavorite = async () => {
+    const url = `${backHost}/delete_favorite?id=${fav.id}`;
     const data = await fetch(url, {
       method: 'POST',
       credentials: 'include',
@@ -58,7 +64,9 @@ function FavoriteCard({ fav, fetchFavorites }) {
             }}
             onClick={() => setFlipped((state) => !state)}
           >
-            <button onClick={() => deleteFavorite(fav.id)}>Delete</button>
+            <Button className={classes.button} variant='contained' onClick={()=>console.log('view profile')}>View Pet</Button>
+            <Button className={classes.button} variant='contained' onClick={()=>console.log('view shelter')}>View Shelter</Button>
+            <Button className={classes.button} variant='contained' onClick={deleteFavorite}>Delete</Button>
           </a.div>
         )}
     </Grid>
