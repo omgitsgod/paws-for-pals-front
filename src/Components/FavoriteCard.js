@@ -64,9 +64,9 @@ function FavoriteCard({ fav, fetchFavorites }) {
             }}
             onClick={() => setFlipped((state) => !state)}
           >
-            <Button className={classes.button} variant='contained' onClick={()=>console.log('view profile')}>View Pet</Button>
-            <Button className={classes.button} variant='contained' onClick={()=>console.log('view shelter')}>View Shelter</Button>
-            <Button className={classes.button} variant='contained' onClick={deleteFavorite}>Delete</Button>
+            <Button className={classes.button} variant='contained' color='primary' onClick={()=>console.log('view profile')}>View Pet</Button>
+            <Button className={classes.button} variant='contained' color='primary' onClick={()=>console.log('view shelter')}>View Shelter</Button>
+            <Button className={classes.button} variant='contained' color='primary' onClick={deleteFavorite}>Delete</Button>
           </a.div>
         )}
     </Grid>
