@@ -4,7 +4,7 @@ import { useDrag } from 'react-use-gesture';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import useGetPets from '../hooks/useGetPets';
 import PetCard from './PetCard';
-import PetProfile from './PetProfile';
+import Card from './Card';
 import { backHost } from '../config';
 
 const to = (i) => ({
@@ -98,19 +98,19 @@ function PetCardContainer({ type, options, handlePet, pet, selected }) {
   }, [type]);
 
   useEffect(() => {
-    if (data.length > 0) {
+    if (data.length > 0 && selected === 'list') {
     handlePet(data, liked.size, disliked.size);
     console.log('pet: ', data[data.length - 1])
     }
   }, [data.length])
 
-  if (!data.length) {
+  if (!data.length && selected === 'list') {
     return (
       <CircularProgress style={{marginTop: '40vh', height: '80px', width: '80px'}}/>
     );
   } else if (selected === 'pet' && pet) {
     return (
-      <PetProfile pet={pet} />
+      <Card source='profile' card={pet} />
     )
   } else if (selected === 'list' && data) {
     return (
