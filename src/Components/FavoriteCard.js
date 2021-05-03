@@ -31,7 +31,7 @@ const useStyles = makeStyles({
   },
 });
 
-function FavoriteCard({ fav, fetchFavorites }) {
+function FavoriteCard({ fav, fetchFavorites, handleFavoritePet }) {
   const classes = useStyles(fav);
   const [flipped, setFlipped] = useState(false);
   const { transform, opacity } = useSpring({
@@ -45,6 +45,13 @@ function FavoriteCard({ fav, fetchFavorites }) {
       method: 'POST',
       credentials: 'include',
     }).then(fetchFavorites);
+  };
+  const deleteFavoriteUnauth = () => {
+    const favorites = JSON.parse(localStorage.getItem('favorites'));
+    const mapped = favorites.map((item) => (item = JSON.parse(item)));
+    const filtered = mapped.filter((item) => item.id !== fav.id);
+    const stringified = JSON.stringify(filtered);
+    localStorage.setItem('favorites', stringified);
   };
   return (
     <Grid item xs={12} sm={3}>
@@ -64,7 +71,7 @@ function FavoriteCard({ fav, fetchFavorites }) {
             }}
             onClick={() => setFlipped((state) => !state)}
           >
-            <Button className={classes.button} variant='contained' color='primary' onClick={()=>console.log('view profile')}>View Pet</Button>
+            <Button className={classes.button} variant='contained' color='primary' onClick={()=> handleFavoritePet(fav)}>View Pet</Button>
             <Button className={classes.button} variant='contained' color='primary' onClick={()=>console.log('view shelter')}>View Shelter</Button>
             <Button className={classes.button} variant='contained' color='primary' onClick={deleteFavorite}>Delete</Button>
           </a.div>
