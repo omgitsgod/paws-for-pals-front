@@ -1,6 +1,6 @@
 import React from 'react';
-import { Typography, Icon, useMediaQuery } from '@material-ui/core';
-import LocationOn from '@material-ui/icons/LocationOn';
+import { Typography, Icon, useMediaQuery, Button, Divider } from '@material-ui/core';
+import { LocationOn as LocationIcon, Close as CloseIcon, Check as CheckIcon } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSpring, animated, to as interpolate } from 'react-spring';
 
@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
   profileCard: {
     backgroundColor: theme.palette.type === 'light' ? 'white' : '#424242',
-    padding: '80px',
+    padding: '20px',
     willChange: 'transform',
     color: 'black',
     borderRadius: '10px',
@@ -54,14 +54,22 @@ const useStyles = makeStyles((theme) => ({
       theme.palette.type === 'light'
         ? '0 12.5px 100px -10px rgba(50, 50, 73, 0.4), 0 10px 10px -10px rgba(50, 50, 73, 0.3)'
         : null,
+    borderColor: 'rgba(255, 255, 255, 0.7)',
+    borderStyle: 'solid',
   },
-  borderColor: 'rgba(255, 255, 255, 0.7)',
-  borderStyle: 'solid',
+  info: {
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    gridGap: '20px',
+  },
+  contact: {
+    marginTop: theme.spacing(1),
+  },
 }));
 
 function Card({ animate, card, source, spring }) {
   const classes = useStyles();
-  const { name, distance, description } = card;
+  const { name, distance, description, species, age, breeds, status, attributes, gender, size } = card;
   const { rot, scale, trans, bind, i, x, y } = spring || {};
   const photo = card.photos[0].full;
   const nameSpaceCount = name.split(' ').length - 1;
@@ -72,9 +80,13 @@ function Card({ animate, card, source, spring }) {
     to: {
       opacity: 1,
       width: mobile ? '50vh' : '85vh',
+      height: mobile ? '87vh' : null,
+      marginTop: mobile ? '6.5vh' : null,
     },
     leave: { opacity: 0, width: '45vh' },
   });
+  console.log(attributes)
+  const checkIcon = (bool) => (bool ? (<Icon color='action'><CheckIcon/></Icon>) : (<Icon color='error'><CloseIcon /></Icon>))
 
   const displayDeck = () => (
       <animated.div className={classes.organize} key={spring.i} style={{ x, y }}>
@@ -92,7 +104,7 @@ function Card({ animate, card, source, spring }) {
       {distance ? (
         <Typography className={classes.distance} variant='h6' align='left'>
           <Icon>
-            <LocationOn />
+            <LocationIcon />
           </Icon>
           {distance > 1 ? distance.toFixed(2) : '< 1'} miles away
         </Typography>
@@ -110,18 +122,51 @@ function Card({ animate, card, source, spring }) {
       <Typography variant={nameVariant} align='left'>
         {name}
       </Typography>
-      {distance ? (
-        <Typography className={classes.distance} variant='h6' align='left'>
-          <Icon>
-            <LocationOn />
-          </Icon>
-          {distance > 1 ? distance.toFixed(2) : '< 1'} miles away
-        </Typography>
-      ) : null}
+      <div className={classes.info}>
+        <div>
+          {distance ? (
+            <Typography className={classes.distance} variant='h6' align='left'>
+              <Icon>
+                <LocationIcon />
+              </Icon>
+              {distance > 1 ? distance.toFixed(2) : '< 1'} miles away
+            </Typography>
+          ) : null}
 
-      <Typography className={classes.description} align='left'>
-        {description}
-      </Typography>
+          <Typography className={classes.description} align='left'>
+            {description}
+          </Typography>
+          <Divider />
+          <Button
+            className={classes.contact}
+            variant='contained'
+            color='primary'
+          >
+            Contact me
+          </Button>
+        </div>
+        <div style={{ marginTop: '-5vh' }}>
+          <Typography align='right'>
+            {breeds.primary}
+            {breeds.secondary ? `/${breeds.secondary}` : null} -{' '}
+            {age === 'Baby' ? (species === 'Dog' ? 'Puppy' : 'Kitten') : age}
+          </Typography>
+          <Typography align='right'>{size} sized {gender}</Typography>
+          <Typography align='right'>{status}</Typography>
+          <Typography align='right'>
+            {checkIcon(attributes.house_trained)}House Trained
+          </Typography>
+          <Typography align='right'>
+            {checkIcon(attributes.shots_current)}Shots Current
+          </Typography>
+          <Typography align='right'>
+            {checkIcon(attributes.spayed_neutered)}Spayed/Neutered
+          </Typography>
+          <Typography align='right'>
+            {checkIcon(attributes.special_needs)}Special Needs
+          </Typography>
+        </div>
+      </div>
     </animated.div>
   );
   if (source === 'deck') {
