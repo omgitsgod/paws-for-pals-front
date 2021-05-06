@@ -19,7 +19,7 @@ const useStyles = makeStyles({
   front: {
     backgroundSize: 'cover',
     backgroundImage: (fav) =>
-      `linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(${fav.primary_photo_cropped.small})`,
+      `linear-gradient( rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75) ), url(${fav.primary_photo_cropped.small})`,
     height: '380px',
     width: '85%',
     display: 'flex',
@@ -31,7 +31,7 @@ const useStyles = makeStyles({
   },
 });
 
-function FavoriteCard({ fav, fetchFavorites, handleFavoritePet }) {
+function FavoriteCard({ fav, fetchFavorites, handleFavoritePet, setPet }) {
   const classes = useStyles(fav);
   const [flipped, setFlipped] = useState(false);
   const { transform, opacity } = useSpring({
@@ -48,10 +48,9 @@ function FavoriteCard({ fav, fetchFavorites, handleFavoritePet }) {
   };
   const deleteFavoriteUnauth = () => {
     const favorites = JSON.parse(localStorage.getItem('favorites'));
-    const mapped = favorites.map((item) => (item = JSON.parse(item)));
-    const filtered = mapped.filter((item) => item.id !== fav.id);
-    const stringified = JSON.stringify(filtered);
-    localStorage.setItem('favorites', stringified);
+    const filteredFavorites = favorites.map((item) => (item = JSON.parse(item))).filter((item) => item.id !== fav.id);
+    const stringifiedFavorites = JSON.stringify(filteredFavorites);
+    localStorage.setItem('favorites', stringifiedFavorites);
   };
   return (
     <Grid item xs={12} sm={3}>
@@ -59,7 +58,9 @@ function FavoriteCard({ fav, fetchFavorites, handleFavoritePet }) {
           <a.div
             className={`${classes.card} ${classes.back}`}
             style={{ opacity: opacity.to((o) => 1 - o), transform }}
-            onClick={() => setFlipped((state) => !state)}
+            onClick={() => setFlipped((state) => {
+              setPet(fav);
+              return !state})}
           ></a.div>
         ) : (
           <a.div
