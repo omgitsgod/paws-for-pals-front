@@ -56,6 +56,7 @@ const useStyles = makeStyles((theme) => ({
         : null,
     borderColor: 'rgba(255, 255, 255, 0.7)',
     borderStyle: 'solid',
+    overflow: 'scroll',
   },
   info: {
     display: 'grid',
@@ -85,7 +86,6 @@ function Card({ animate, card, source, spring }) {
     },
     leave: { opacity: 0, width: '45vh' },
   });
-  console.log(attributes)
   const checkIcon = (bool) => (bool ? (<Icon color='action'><CheckIcon/></Icon>) : (<Icon color='error'><CloseIcon /></Icon>))
 
   const displayDeck = () => (
