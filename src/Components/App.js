@@ -52,10 +52,12 @@ function App() {
     setUser(null);
   };
   const handlePet = (data, liked, disliked) => {
-    const less = data.length - 1 - liked - disliked;
-    console.log('less: ', less)
-    setPet(less >= 0 ? data[less] : {})
-  }
+    if (selected === 'list') {
+      const less = data.length - 1 - liked - disliked;
+      console.log('less: ', less);
+      setPet(less >= 0 ? data[less] : {});
+    }
+  };
   const handleFavoritePet = (fav) => {
     setSelected('pet');
     setPet(fav);
@@ -93,8 +95,9 @@ function App() {
               handlePet={handlePet}
               pet={pet}
               selected={selected}
+              user={isAuthenticated}
             />
-          ) : <FavoriteContainer handleFavoritePet={handleFavoritePet} /> : (
+          ) : <FavoriteContainer handleFavoritePet={handleFavoritePet} setPet={setPet} user={isAuthenticated} /> : (
             <ModalContainer
               open={modal}
               setOpen={setModal}
