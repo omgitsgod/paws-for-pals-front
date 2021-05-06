@@ -15,10 +15,10 @@ const useStyles = makeStyles({
   },
 });
 
-function FavoriteContainer({ handleFavoritePet }) {
+function FavoriteContainer({ handleFavoritePet, setPet, isAuthenticated }) {
   const classes = useStyles();
   const [favorites, setFavorites] = useState([]);
-  const fetchFavorites = async () => {
+  const fetchFavorites = isAuthenticated ? async () => {
     const url = `${backHost}/get_favorites`;
     const data = await fetch(url, {
       method: 'GET',
@@ -26,12 +26,18 @@ function FavoriteContainer({ handleFavoritePet }) {
     }).then((r) => r.json());
     console.log('favorites', data);
     setFavorites(data);
+  } : async () => {
+    let favorites = JSON.parse(localStorage.getItem('favorites'))
+    if (favorites) {
+    favorites = favorites.map((item) => (item = JSON.parse(item)));
+    setFavorites(favorites);
+    }
   }
   useEffect( () => {
     fetchFavorites();
   }, [])
   const favoriteCards = favorites.map((fav) => (
-    <FavoriteCard fav={fav} key={fav.id} fetchFavorites={fetchFavorites} handleFavoritePet={handleFavoritePet} />
+    <FavoriteCard fav={fav} key={fav.id} fetchFavorites={fetchFavorites} handleFavoritePet={handleFavoritePet} setPet={setPet} />
   ));
   
   return (
