@@ -95,9 +95,9 @@ function App() {
               handlePet={handlePet}
               pet={pet}
               selected={selected}
-              user={isAuthenticated}
+              isAuthenticated={isAuthenticated}
             />
-          ) : <FavoriteContainer handleFavoritePet={handleFavoritePet} setPet={setPet} user={isAuthenticated} /> : (
+          ) : <FavoriteContainer handleFavoritePet={handleFavoritePet} setPet={setPet} isAuthenticated={isAuthenticated} /> : (
             <ModalContainer
               open={modal}
               setOpen={setModal}
