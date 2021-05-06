@@ -5,22 +5,9 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import useGetPets from '../hooks/useGetPets';
 import PetCard from './PetCard';
 import Card from './Card';
-import { backHost } from '../config';
+import { backHost, to, from, trans } from '../config';
 
-const to = (i) => ({
-  x: 0,
-  y: i * -4,
-  scale: 1,
-  rot: -10 + Math.random() * 20,
-  delay: i * 100,
-});
-const from = (i) => ({ x: 0, rot: 0, scale: 1.5, y: -1000 });
-const trans = (r, s) =>
-  `perspective(1500px) rotateX(30deg) rotateY(${
-    r / 10
-  }deg) rotateZ(${r}deg) scale(${s})`;
-
-function PetCardContainer({ type, options, handlePet, pet, selected }) {
+function PetCardContainer({ type, options, handlePet, pet, selected, isAuthenticated }) {
   const [disliked] = useState(() => new Set());
   const [liked] = useState(() => new Set());
   const [state, setType, setOptions, nextPage] = useGetPets(type, options);
@@ -35,7 +22,7 @@ function PetCardContainer({ type, options, handlePet, pet, selected }) {
     set((i) => to(i));
     nextPage();
   };
-  const saveToDatabase = async (item) => {
+  const saveToDatabase = isAuthenticated ? async (item) => {
     console.log(item)
     const success = await fetch(`${backHost}/save_favorite`, {
       method: 'POST',
@@ -45,6 +32,22 @@ function PetCardContainer({ type, options, handlePet, pet, selected }) {
       'Content-Type': 'application/json'
       }
     }).then((r) => r.json());
+  } : async (item) => {
+      const stringItem = JSON.stringify(item);
+      const storedFavorites = localStorage.getItem('favorites');
+      let favorites
+      console.log('savetolocalstorageeee')
+      if (storedFavorites) {
+        favorites = JSON.parse(storedFavorites);
+        if (favorites.length < 10) {
+          if (!favorites.includes(stringItem)) {
+            favorites.push(stringItem);
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+          }
+        }
+      } else {
+        localStorage.setItem('favorites', JSON.stringify([stringItem]));
+      }
   }
   const addPetLiked = (index) => {
     const selectedPet = data[index];
