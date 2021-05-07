@@ -29,15 +29,16 @@ function FavoriteContainer({ handleFavoritePet, setPet, isAuthenticated }) {
   } : async () => {
     let favorites = JSON.parse(localStorage.getItem('favorites'))
     if (favorites) {
-    favorites = favorites.map((item) => (item = JSON.parse(item)));
     setFavorites(favorites);
+    } else {
+      setFavorites([]);
     }
   }
   useEffect( () => {
     fetchFavorites();
   }, [])
   const favoriteCards = favorites.map((fav) => (
-    <FavoriteCard fav={fav} key={fav.id} fetchFavorites={fetchFavorites} handleFavoritePet={handleFavoritePet} setPet={setPet} />
+    <FavoriteCard fav={fav} key={fav.id} fetchFavorites={fetchFavorites} handleFavoritePet={handleFavoritePet} setPet={setPet} isAuthenticated={isAuthenticated} />
   ));
   
   return (
