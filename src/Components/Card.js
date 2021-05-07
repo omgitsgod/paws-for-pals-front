@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
   info: {
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
-    gridGap: '20px',
+    gridGap: '5px',
   },
   contact: {
     marginTop: theme.spacing(1),
@@ -81,8 +81,8 @@ function Card({ animate, card, source, spring }) {
     to: {
       opacity: 1,
       width: mobile ? '50vh' : '85vh',
-      height: mobile ? '87vh' : null,
-      marginTop: mobile ? '6.5vh' : null,
+      height: mobile ? '75%' : null,
+      marginTop: mobile ? '15%' : null,
     },
     leave: { opacity: 0, width: '45vh' },
   });
