@@ -12,6 +12,7 @@ function PetCardContainer({ type, options, handlePet, pet, selected, isAuthentic
   const [liked] = useState(() => new Set());
   const [state, setType, setOptions, nextPage] = useGetPets(type, options);
   const { data, isLoading, isError } = state;
+  const unauthFavLimit = 10;
   const [springProps, set] = useSprings(data.length, (i) => ({
     ...to(i),
     from: from(i),
@@ -33,20 +34,20 @@ function PetCardContainer({ type, options, handlePet, pet, selected, isAuthentic
       }
     }).then((r) => r.json());
   } : async (item) => {
-      const stringItem = JSON.stringify(item);
       const storedFavorites = localStorage.getItem('favorites');
       let favorites
-      console.log('savetolocalstorageeee')
       if (storedFavorites) {
         favorites = JSON.parse(storedFavorites);
-        if (favorites.length < 10) {
-          if (!favorites.includes(stringItem)) {
-            favorites.push(stringItem);
+        if (favorites.length < unauthFavLimit) {
+          if (!favorites.filter((x) => x.id == item.id)[0]) {
+            favorites.push(item);
             localStorage.setItem('favorites', JSON.stringify(favorites));
           }
+        } else {
+          alert(`Log in to account to add more than ${unauthFavLimit} favorites!`)
         }
       } else {
-        localStorage.setItem('favorites', JSON.stringify([stringItem]));
+        localStorage.setItem('favorites', JSON.stringify([item]));
       }
   }
   const addPetLiked = (index) => {
