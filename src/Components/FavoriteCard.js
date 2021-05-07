@@ -31,7 +31,7 @@ const useStyles = makeStyles({
   },
 });
 
-function FavoriteCard({ fav, fetchFavorites, handleFavoritePet, setPet }) {
+function FavoriteCard({ fav, fetchFavorites, handleFavoritePet, setPet, isAuthenticated }) {
   const classes = useStyles(fav);
   const [flipped, setFlipped] = useState(false);
   const { transform, opacity } = useSpring({
@@ -39,19 +39,19 @@ function FavoriteCard({ fav, fetchFavorites, handleFavoritePet, setPet }) {
     transform: `perspective(600px) rotateX(${flipped ? 180 : 0}deg)`,
     config: { mass: 5, tension: 500, friction: 80 },
   });
-  const deleteFavorite = async () => {
+  const deleteFavorite = isAuthenticated ? async () => {
     const url = `${backHost}/delete_favorite?id=${fav.id}`;
     const data = await fetch(url, {
       method: 'POST',
       credentials: 'include',
     }).then(fetchFavorites);
-  };
-  const deleteFavoriteUnauth = () => {
+  } : async () => {
     const favorites = JSON.parse(localStorage.getItem('favorites'));
-    const filteredFavorites = favorites.map((item) => (item = JSON.parse(item))).filter((item) => item.id !== fav.id);
+    const filteredFavorites = favorites.filter((item) => item.id !== fav.id);
     const stringifiedFavorites = JSON.stringify(filteredFavorites);
     localStorage.setItem('favorites', stringifiedFavorites);
-  };
+    fetchFavorites();
+  }
   return (
     <Grid item xs={12} sm={3}>
         {!flipped ? (
