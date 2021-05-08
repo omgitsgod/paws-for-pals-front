@@ -2,6 +2,7 @@ import React from 'react';
 import { Typography, Icon, useMediaQuery, Button, Divider } from '@material-ui/core';
 import { LocationOn as LocationIcon, Close as CloseIcon, Check as CheckIcon } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
+import Carousel from 'react-material-ui-carousel';
 import { useSpring, animated, to as interpolate } from 'react-spring';
 
 const useStyles = makeStyles((theme) => ({
@@ -18,6 +19,9 @@ const useStyles = makeStyles((theme) => ({
     height: '380px',
     width: '85%',
     userDrag: 'none',
+  },
+  profileImg: {
+    height: '280px'
   },
   distance: {
     color: 'gray',
@@ -72,7 +76,8 @@ function Card({ animate, card, source, spring }) {
   const classes = useStyles();
   const { name, distance, description, species, age, breeds, status, attributes, gender, size } = card;
   const { rot, scale, trans, bind, i, x, y } = spring || {};
-  const photo = card.photos[0].full;
+  const mainPhoto = card.photos[0].full;
+  const photos = card.photos;
   const nameSpaceCount = name.split(' ').length - 1;
   const nameVariant = nameSpaceCount > 1 ? 'h5' : 'h4';
   const mobile = useMediaQuery('(max-width:600px)');
@@ -97,7 +102,7 @@ function Card({ animate, card, source, spring }) {
         transform: interpolate([rot, scale], trans),
       }}
     >
-      <img src={photo} className={classes.img} alt='Pal' />
+      <img src={mainPhoto} className={classes.img} alt='Pal' />
       <Typography variant={nameVariant} align='left'>
         {name}
       </Typography>
@@ -118,7 +123,11 @@ function Card({ animate, card, source, spring }) {
   );
   const displayProfile = () => (
     <animated.div className={classes.profileCard} style={cardStyle}>
-      <img src={photo} className={classes.img} alt='Pal' />
+      <Carousel navButtonsAlwaysVisible>
+        {photos.map((image) => (
+          <img src={image.full} className={classes.profileImg} alt='Pal' />
+        ))}
+      </Carousel>
       <Typography variant={nameVariant} align='left'>
         {name}
       </Typography>
@@ -151,7 +160,9 @@ function Card({ animate, card, source, spring }) {
             {breeds.secondary ? `/${breeds.secondary}` : null} -{' '}
             {age === 'Baby' ? (species === 'Dog' ? 'Puppy' : 'Kitten') : age}
           </Typography>
-          <Typography align='right'>{size} sized {gender}</Typography>
+          <Typography align='right'>
+            {size} sized {gender}
+          </Typography>
           <Typography align='right'>{status}</Typography>
           <Typography align='right'>
             {checkIcon(attributes.house_trained)}House Trained
