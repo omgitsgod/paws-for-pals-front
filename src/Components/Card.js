@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     userDrag: 'none',
   },
   profileImg: {
-    height: '280px'
+    height: '280px',
   },
   distance: {
     color: 'gray',
@@ -91,41 +91,41 @@ function Card({ animate, card, source, spring }) {
     },
     leave: { opacity: 0, width: '45vh' },
   });
-  const checkIcon = (bool) => (bool ? (<Icon color='action'><CheckIcon/></Icon>) : (<Icon color='error'><CloseIcon /></Icon>))
+  const checkIcon = (bool) => (bool ? (<Icon color='action'><CheckIcon/></Icon>) : (<Icon color='error'><CloseIcon /></Icon>));
 
   const displayDeck = () => (
-      <animated.div className={classes.organize} key={spring.i} style={{ x, y }}>
-    <animated.div
-      className={classes.card}
-      {...bind(i)}
-      style={{
-        transform: interpolate([rot, scale], trans),
-      }}
-    >
-      <img src={mainPhoto} className={classes.img} alt='Pal' />
-      <Typography variant={nameVariant} align='left'>
-        {name}
-      </Typography>
-      {distance ? (
-        <Typography className={classes.distance} variant='h6' align='left'>
-          <Icon>
-            <LocationIcon />
-          </Icon>
-          {distance > 1 ? distance.toFixed(2) : '< 1'} miles away
+    <animated.div className={classes.organize} key={spring.i} style={{ x, y }}>
+      <animated.div
+        className={classes.card}
+        {...bind(i)}
+        style={{
+          transform: interpolate([rot, scale], trans),
+        }}
+      >
+        <img src={mainPhoto} className={classes.img} alt='Pal' />
+        <Typography variant={nameVariant} align='left'>
+          {name}
         </Typography>
-      ) : null}
+        {distance ? (
+          <Typography className={classes.distance} variant='h6' align='left'>
+            <Icon>
+              <LocationIcon />
+            </Icon>
+            {distance > 1 ? distance.toFixed(2) : '< 1'} miles away
+          </Typography>
+        ) : null}
 
-      <Typography className={classes.description} align='left'>
-        {description}
-      </Typography>
-    </animated.div>
+        <Typography className={classes.description} align='left'>
+          {description}
+        </Typography>
+      </animated.div>
     </animated.div>
   );
   const displayProfile = () => (
     <animated.div className={classes.profileCard} style={cardStyle}>
-      <Carousel navButtonsAlwaysVisible>
-        {photos.map((image) => (
-          <img src={image.full} className={classes.profileImg} alt='Pal' />
+      <Carousel navButtonsAlwaysVisible={photos.length > 1}>
+        {photos.map((image, i) => (
+          <img key={i} src={image.full} className={classes.profileImg} alt='Pal' />
         ))}
       </Carousel>
       <Typography variant={nameVariant} align='left'>
