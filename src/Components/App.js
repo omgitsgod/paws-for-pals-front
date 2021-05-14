@@ -7,9 +7,11 @@ import SpeedDialMenu from './SpeedDialMenu';
 import BottomNav from './BottomNav'
 import PetCardContainer from './PetCardContainer';
 import FavoriteContainer from './FavoriteContainer';
+import ShelterCard from './ShelterCard';
 import ModalContainer from './ModalContainer';
 import { dark, light } from '../theme';
 import { backHost, removeHash } from '../config';
+
 
 function App() {
   const [options, setOptions] = useState(localStorage.getItem('options') ? JSON.parse(localStorage.getItem('options')) : {
@@ -67,6 +69,48 @@ function App() {
     getDogs: () => setOptions({...options, type: 'Dog'}),
     getCats: () => setOptions({...options, type: 'Cat'}),
   };
+  const displaySwitch = (view) => {
+    let result
+    switch(view) {
+      case 'list':
+        return (
+          <PetCardContainer
+            key={options.type}
+            type={options.type}
+            options={options}
+            handlePet={handlePet}
+            pet={pet}
+            selected={selected}
+            isAuthenticated={isAuthenticated}
+          />
+        );
+      case 'pet':
+        return (
+          <PetCardContainer
+            key={options.type}
+            type={options.type}
+            options={options}
+            handlePet={handlePet}
+            pet={pet}
+            selected={selected}
+            isAuthenticated={isAuthenticated}
+          />
+        );
+      case 'favorites':
+        return (
+          <FavoriteContainer
+            handleFavoritePet={handleFavoritePet}
+            setPet={setPet}
+            isAuthenticated={isAuthenticated}
+          />
+        );
+      case 'shelter':
+        return (
+          <ShelterCard id={pet.organization_id}/>
+        )
+    }
+    return result
+  }
   useEffect(() => {
     removeHash();
     handleLogin();
@@ -87,24 +131,13 @@ function App() {
           />
         ) : null}
         <div className='Content'>
-          {!modal ? selected !== 'favorites' ? (
-            <PetCardContainer
-              key={options.type}
-              type={options.type}
-              options={options}
-              handlePet={handlePet}
-              pet={pet}
-              selected={selected}
-              isAuthenticated={isAuthenticated}
-            />
-          ) : <FavoriteContainer handleFavoritePet={handleFavoritePet} setPet={setPet} isAuthenticated={isAuthenticated} /> : (
+          {modal ? (
             <ModalContainer
               open={modal}
               setOpen={setModal}
               setOptions={setOptions}
               initialOptions={options}
-            />
-          )}
+            />) : displaySwitch(selected)}
           <SpeedDialMenu onClickActions={onClickActions} />
         </div>
         <BottomNav selected={selected} setSelected={setSelected} pet={pet} />
