@@ -60,8 +60,8 @@ function App() {
       setPet(less >= 0 ? data[less] : {});
     }
   };
-  const handleFavoritePet = (fav) => {
-    setSelected('pet');
+  const handleFavoritePet = (view, fav) => {
+    setSelected(view);
     setPet(fav);
   }
   const onClickActions = {
