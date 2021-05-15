@@ -9,7 +9,7 @@ import {
   Button,
   Divider,
 } from '@material-ui/core';
-import { GpsFixedTwoTone as LocationIcon } from '@material-ui/icons';
+import { GpsFixedTwoTone as LocationIcon, ArrowBack as ArrowBackIcon } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -21,23 +21,32 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ZipCodeModal({ open, setZip }) {
+function ZipCodeModal({ open, handleLocation, handleLocationType }) {
   const classes = useStyles();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const zipCode = e.target.zipcode.value;
-    zipCode.match(/^\d{5}(-\d{4})?$/) ? setZip(zipCode) : console.log('nope');
+    zipCode.match(/^\d{5}(-\d{4})?$/) ? handleLocation(zipCode) : console.log('nope');
   };
-  const handleLocation = async (position) => {
+  const handleCoords = async (position) => {
     const { latitude, longitude } = position.coords;
     const location = `${latitude},${longitude}`;
-    setZip(location);
+    handleLocation(location);
   };
   return (
     <Fade in={open}>
       <div className={classes.paper}>
-        <Typography variant='h5'>Enter Zip Code</Typography>
+        <IconButton
+          aria-label='back'
+          aria-controls='back'
+          aria-haspopup='true'
+          onClick={() => handleLocationType('Any')}
+          style={{ position:'absolute'}}
+        >
+          <ArrowBackIcon />
+        </IconButton>
+        <Typography variant='h5' align='center'>Enter Zip Code</Typography>
         <form className={classes.form} onSubmit={handleSubmit}>
           <FormControl margin='normal' required fullWidth>
             <InputLabel htmlFor='zipcode'>Zip Code</InputLabel>
@@ -60,7 +69,7 @@ function ZipCodeModal({ open, setZip }) {
           aria-haspopup='true'
           color='primary'
           onClick={() =>
-            navigator.geolocation.getCurrentPosition(handleLocation)
+            navigator.geolocation.getCurrentPosition(handleCoords)
           }
         >
           <LocationIcon />
