@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh',
     willChange: 'transform',
     display: 'flex',
-    marginTop: '20vh',
+    marginTop: '5vh',
     justifyContent: 'center',
   },
   img: {
