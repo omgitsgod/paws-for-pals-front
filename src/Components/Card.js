@@ -86,7 +86,7 @@ function Card({ animate, card, source, spring }) {
     to: {
       opacity: 1,
       width: mobile ? '50vh' : '85vh',
-      height: mobile ? '80vh' : null,
+      height: mobile ? '100%' : null,
     },
     leave: { opacity: 0, width: '45vh' },
   });

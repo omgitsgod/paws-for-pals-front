@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     color:
       theme.palette.type === 'light' ? '#393535' : 'rgba(255, 255, 255, 0.7)',
   },
-  profileCard: {
+  shelterCard: {
     backgroundColor: theme.palette.type === 'light' ? 'white' : '#424242',
     padding: '20px',
     willChange: 'transform',
@@ -57,7 +57,7 @@ function ShelterCard({ id }) {
     to: {
       opacity: 1,
       width: mobile ? '50vh' : '85vh',
-      height: mobile ? '80vh' : null,
+      height: mobile ? '100%' : null,
     },
     leave: { opacity: 0, width: '45vh' },
   });
@@ -75,7 +75,7 @@ function ShelterCard({ id }) {
   return (
     <>
       {shelter.photos ? (
-        <animated.div className={classes.profileCard} style={cardStyle}>
+        <animated.div className={classes.shelterCard} style={cardStyle}>
           <Carousel navButtonsAlwaysVisible={shelter.photos?.length > 1}>
             {shelter.photos.map((image, i) => (
               <img
