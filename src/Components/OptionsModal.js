@@ -11,7 +11,9 @@ import {
   Button,
   Radio,
   Slider,
+  IconButton,
 } from '@material-ui/core';
+import { Close as CloseIcon } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import ZipCodeModal from './ZipCodeModal';
 
@@ -38,7 +40,12 @@ function OptionsModal({ open, setOpen, setOptions, initialOptions }) {
     setAge({ ...age, [e.target.name]: e.target.checked });
   };
   const handleLocationType = (e) => {
-    setLocationType(e.target.value);
+    const value = e.target?.value || e
+    console.log(value)
+    setLocationType(value);
+    if (value === 'Any') {
+      setLocation(null);
+    }
   };
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -110,6 +117,15 @@ function OptionsModal({ open, setOpen, setOptions, initialOptions }) {
     return (
       <Fade in={open}>
         <div className={classes.paper}>
+          <IconButton
+            aria-label='close'
+            aria-controls='close'
+            aria-haspopup='true'
+            onClick={() => setOpen(false)}
+            style={{ float: 'right' }}
+          >
+            <CloseIcon />
+          </IconButton>
           <Typography variant='h5' align='center'>
             paws for pals
           </Typography>
@@ -204,7 +220,11 @@ function OptionsModal({ open, setOpen, setOptions, initialOptions }) {
               <FormControl margin='normal' required fullWidth>
                 <FormLabel component='legend'>Distance</FormLabel>
                 <Slider
-                  defaultValue={initialOptions.distance ? parseInt(initialOptions.distance) : 10}
+                  defaultValue={
+                    initialOptions.distance
+                      ? parseInt(initialOptions.distance)
+                      : 10
+                  }
                   getAriaValueText={valueText}
                   name='distance'
                   aria-labelledby='distance'
@@ -231,7 +251,7 @@ function OptionsModal({ open, setOpen, setOptions, initialOptions }) {
       </Fade>
     );
   } else {
-    return <ZipCodeModal open={open} setZip={handleLocation} />;
+    return <ZipCodeModal open={open} handleLocation={handleLocation} handleLocationType={handleLocationType} />;
   }
 }
 
