@@ -45,7 +45,7 @@ function TopBar({ user, isAuthenticated, handleLogout, darkMode, setDarkMode }) 
 
   return (
     <div className={classes.root}>
-      <AppBar position='fixed'>
+      <AppBar position='static'>
         <Toolbar>
           <Switch
             checked={darkMode}
