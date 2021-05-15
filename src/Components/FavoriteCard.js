@@ -72,8 +72,8 @@ function FavoriteCard({ fav, fetchFavorites, handleFavoritePet, setPet, isAuthen
             }}
             onClick={() => setFlipped((state) => !state)}
           >
-            <Button className={classes.button} variant='contained' color='primary' onClick={()=> handleFavoritePet(fav)}>View Pet</Button>
-            <Button className={classes.button} variant='contained' color='primary' onClick={()=>console.log('view shelter')}>View Shelter</Button>
+            <Button className={classes.button} variant='contained' color='primary' onClick={()=> handleFavoritePet('pet', fav)}>View Pet</Button>
+            <Button className={classes.button} variant='contained' color='primary' onClick={()=> handleFavoritePet('shelter', fav)}>View Shelter</Button>
             <Button className={classes.button} variant='contained' color='primary' onClick={deleteFavorite}>Delete</Button>
           </a.div>
         )}
