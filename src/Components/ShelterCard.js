@@ -61,6 +61,14 @@ function ShelterCard({ id }) {
     },
     leave: { opacity: 0, width: '45vh' },
   });
+  const handleHours = (days) => {
+    const hours = []
+    console.log(days)
+    for (const day in days) {
+      hours.push(days[day] ? (<Typography align='right'>{day}: {days[day]}</Typography>) : (<Typography align='right'>{day}: <Typography align='right' color='error' display='inline'>closed</Typography></Typography>));
+    }
+    return hours
+  }
   const fetchShelter = async () => {
     const url = `${backHost}/shelter?id=${id}`;
     const data = await fetch(url).then((r) => r.json());
@@ -118,35 +126,7 @@ function ShelterCard({ id }) {
               </Button>
             </div>
             <div>
-              <Typography align='right'>
-                Monday:{' '}
-                {shelter.hours.monday ? shelter.hours.monday : 'not open'}
-              </Typography>
-              <Typography align='right'>
-                Tuesday:{' '}
-                {shelter.hours.tuesday ? shelter.hours.tuesday : 'not open'}
-              </Typography>
-              <Typography align='right'>
-                Wednesday:{' '}
-                {shelter.hours.wednesday ? shelter.hours.wednesday : 'not open'}
-              </Typography>
-              <Typography align='right'>
-                Thursday:{' '}
-                {shelter.hours.thursday ? shelter.hours.thursday : 'not open'}
-              </Typography>
-              <Typography align='right'>
-                {' '}
-                Friday:{' '}
-                {shelter.hours.friday ? shelter.hours.friday : 'not open'}
-              </Typography>
-              <Typography align='right'>
-                Saturday:{' '}
-                {shelter.hours.saturday ? shelter.hours.saturday : 'not open'}
-              </Typography>
-              <Typography align='right'>
-                Sunday:{' '}
-                {shelter.hours.sunday ? shelter.hours.sunday : 'not open'}
-              </Typography>
+              {handleHours(shelter.hours)}
             </div>
           </div>
         </animated.div>
