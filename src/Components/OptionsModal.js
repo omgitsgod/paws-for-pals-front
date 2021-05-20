@@ -12,10 +12,13 @@ import {
   Radio,
   Slider,
   IconButton,
+  TextField,
 } from '@material-ui/core';
+import { Autocomplete } from '@material-ui/lab';
 import { Close as CloseIcon } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import ZipCodeModal from './ZipCodeModal';
+import { dogBreeds, catBreeds } from '../config';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -32,6 +35,7 @@ function OptionsModal({ open, setOpen, setOptions, initialOptions }) {
   const [age, setAge] = useState(initialOptions.age);
   const [locationType, setLocationType] = useState(initialOptions.location ? 'Zip' : 'Any');
   const [location, setLocation] = useState(initialOptions.location ? initialOptions.location : null);
+  const [breeds, setBreeds] = useState([]);
 
   const handleType = (e) => {
     setType(e.target.value);
@@ -67,6 +71,9 @@ function OptionsModal({ open, setOpen, setOptions, initialOptions }) {
   const handleLocation = (e) => {
     setLocation(e);
     setLocationType('Zip');
+  };
+  const handleBreed = (x, breed) => {
+   (dogBreeds.includes(breed) || catBreeds.includes(breed)) && setBreeds((breeds) => [...breeds, breed]);
   };
   const valueText = (value) => {
     return `${value} miles`;
@@ -146,6 +153,40 @@ function OptionsModal({ open, setOpen, setOptions, initialOptions }) {
                 <FormControlLabel value='Cat' control={<Radio />} label='Cat' />
               </RadioGroup>
             </FormControl>
+            {breeds.length < 5 ? (
+              <FormControl margin='normal' fullWidth>
+                <FormLabel component='legend'>Breed</FormLabel>
+                <Autocomplete
+                  autoComplete
+                  autoHighlight
+                  options={type === 'Dog' ? dogBreeds : catBreeds}
+                  onInputChange={handleBreed}
+                  renderInput={(params) => <TextField {...params} />}
+                />
+              </FormControl>
+            ) : (
+              <Typography
+              >
+                Please remove a selection to add more breeds!
+              </Typography>
+            )}
+            {breeds.map(
+              (breed, i) =>
+                breed && (
+                  <Typography
+                    color='secondary'
+                    display='inline'
+                    variant='subtitle1'
+                    key={i}
+                    onClick={() =>
+                      setBreeds((breeds) => breeds.filter((x) => x !== breed))
+                    }
+                  >
+                    {breed}
+                    {breeds.length > 0 && i < breeds.length - 1 && ', '}
+                  </Typography>
+                )
+            )}
             <FormControl margin='normal' required fullWidth>
               <FormLabel component='legend'>Age</FormLabel>
               <FormGroup name='age' row>
@@ -236,16 +277,16 @@ function OptionsModal({ open, setOpen, setOptions, initialOptions }) {
                 />
               </FormControl>
             ) : null}
-            <Button
-              type='submit'
-              fullWidth
-              variant='contained'
-              //   color='primary'
-              className={classes.submit}
-              style={{ background: 'transparent', boxShadow: 'none' }}
-            >
-              FIND MY PAL
-            </Button>
+            <div style={{ textAlign: 'center' }}>
+              <Button
+                type='submit'
+                variant='outlined'
+                className={classes.submit}
+                style={{ background: 'transparent', boxShadow: 'none' }}
+              >
+                FIND MY PAL
+              </Button>
+            </div>
           </form>
         </div>
       </Fade>
