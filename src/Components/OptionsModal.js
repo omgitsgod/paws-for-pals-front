@@ -158,6 +158,7 @@ function OptionsModal({ open, setOpen, setOptions, initialOptions }) {
                 <FormLabel component='legend'>Breed</FormLabel>
                 <Autocomplete
                   autoComplete
+                  key={breeds[breeds.length -1] || ''}
                   autoHighlight
                   options={type === 'Dog' ? dogBreeds : catBreeds}
                   onInputChange={handleBreed}
