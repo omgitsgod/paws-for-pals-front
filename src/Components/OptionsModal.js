@@ -35,7 +35,7 @@ function OptionsModal({ open, setOpen, setOptions, initialOptions }) {
   const [age, setAge] = useState(initialOptions.age);
   const [locationType, setLocationType] = useState(initialOptions.location ? 'Zip' : 'Any');
   const [location, setLocation] = useState(initialOptions.location ? initialOptions.location : null);
-  const [breeds, setBreeds] = useState([]);
+  const [breeds, setBreeds] = useState(initialOptions.breed ? initialOptions.breed : []);
 
   const handleType = (e) => {
     setType(e.target.value);
@@ -62,6 +62,9 @@ function OptionsModal({ open, setOpen, setOptions, initialOptions }) {
     }
     if (e.target.distance) {
       tempOptions.distance = e.target.distance.value;
+    }
+    if (breeds.length > 0) {
+      tempOptions.breed = breeds
     }
     setOptions(tempOptions);
     localStorage.setItem('options', JSON.stringify(tempOptions));
