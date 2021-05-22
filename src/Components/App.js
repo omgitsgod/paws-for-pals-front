@@ -27,6 +27,7 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [modal, setModal] = useState(localStorage.getItem('options') ? false : true);
   const [selected, setSelected] = useState('list');
+  const [shelters, setShelters] = useState([])
   const [pet, setPet] = useState({});
   const [darkMode, setDarkMode] = useDarkMode();
   const theme = createMuiTheme(darkMode ? dark : light);
@@ -64,6 +65,14 @@ function App() {
     setSelected(view);
     setPet(fav);
   }
+  const handleShelters = async (ids) => {
+    console.log('ids', ids)
+    const results = await fetch(`${backHost}/shelters?ids=${JSON.stringify([...ids])}`).then(r => r.json());
+    setShelters(results);
+  }
+  const handleLoadedShelter =
+    shelters.length > 0 &&
+    shelters.filter((x) => x.id === pet.organization_id)[0];
   const onClickActions = {
     changeOptions: () => setModal(true),
     getDogs: () => setOptions({...options, type: 'Dog'}),
@@ -82,6 +91,7 @@ function App() {
             pet={pet}
             selected={selected}
             isAuthenticated={isAuthenticated}
+            handleShelters={handleShelters}
           />
         );
       case 'pet':
@@ -106,7 +116,7 @@ function App() {
         );
       case 'shelter':
         return (
-          <ShelterCard id={pet.organization_id}/>
+          <ShelterCard loadedShelter={handleLoadedShelter} id={pet.organization_id}/>
         )
     }
     return result
