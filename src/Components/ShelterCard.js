@@ -46,9 +46,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ShelterCard({ id }) {
+function ShelterCard({ loadedShelter, id }) {
   const classes = useStyles();
-  const [shelter, setShelter] = useState({})
+  const [shelter, setShelter] = useState(loadedShelter || {});
   const nameSpaceCount = shelter.name?.split(' ').length - 1;
   const nameVariant = nameSpaceCount > 1 ? 'h5' : 'h4';
   const mobile = useMediaQuery('(max-width:600px)');
@@ -63,21 +63,21 @@ function ShelterCard({ id }) {
   });
   const handleHours = (days) => {
     const hours = []
-    console.log(days)
     for (const day in days) {
       hours.push(days[day] ? (<Typography align='right'>{day}: {days[day]}</Typography>) : (<Typography align='right'>{day}: <Typography align='right' color='error' display='inline'>closed</Typography></Typography>));
     }
-    return hours
+    return hours;
   }
   const fetchShelter = async () => {
     const url = `${backHost}/shelter?id=${id}`;
     const data = await fetch(url).then((r) => r.json());
-    setShelter(data.organization);
+    setShelter(data);
   }
 
   useEffect(() => {
-    fetchShelter();
-    console.log(shelter)
+    if (!loadedShelter) {
+      fetchShelter();
+    }
   }, []);
 
   return (
