@@ -101,15 +101,12 @@ function PetCardContainer({ type, options, handlePet, pet, selected, isAuthentic
     setType(type);
   }, [type]);
   useEffect(() => {
-
-  })
-  useEffect(() => {
     if (data?.length > 0 && selected === 'list') {
     handlePet(data, liked.size, disliked.size);
     console.log('pet: ', data[data.length - 1])
     handleShelters(new Set(data.map(pet => pet.organization_id)));
     }
-  }, [data?.length])
+  }, [data])
 
   if (!data?.length && selected === 'list') {
     return (
