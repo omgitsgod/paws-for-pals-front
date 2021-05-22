@@ -7,13 +7,13 @@ import PetCard from './PetCard';
 import Card from './Card';
 import { backHost, to, from, trans } from '../config';
 
-function PetCardContainer({ type, options, handlePet, pet, selected, isAuthenticated }) {
+function PetCardContainer({ type, options, handlePet, pet, selected, isAuthenticated, handleShelters }) {
   const [disliked] = useState(() => new Set());
   const [liked] = useState(() => new Set());
   const [state, setType, setOptions, nextPage] = useGetPets(type, options);
   const { data, isLoading, isError } = state;
   const unauthFavLimit = 10;
-  const [springProps, set] = useSprings(data.length, (i) => ({
+  const [springProps, set] = useSprings(data?.length || 0, (i) => ({
     ...to(i),
     from: from(i),
   }));
@@ -100,15 +100,18 @@ function PetCardContainer({ type, options, handlePet, pet, selected, isAuthentic
   useEffect(() => {
     setType(type);
   }, [type]);
-
   useEffect(() => {
-    if (data.length > 0 && selected === 'list') {
+
+  })
+  useEffect(() => {
+    if (data?.length > 0 && selected === 'list') {
     handlePet(data, liked.size, disliked.size);
     console.log('pet: ', data[data.length - 1])
+    handleShelters(new Set(data.map(pet => pet.organization_id)));
     }
-  }, [data.length])
+  }, [data?.length])
 
-  if (!data.length && selected === 'list') {
+  if (!data?.length && selected === 'list') {
     return (
       <CircularProgress style={{marginTop: '40vh', height: '80px', width: '80px'}}/>
     );
