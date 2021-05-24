@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import { List, Store, Favorite, Pets as PetIcon } from '@material-ui/icons';
+import { List as ListIcon, Store as StoreIcon, Favorite as FavoriteIcon, Pets as PetIcon } from '@material-ui/icons';
 import DogIcon from '../DogIcon';
 import CatIcon from '../CatIcon';
 
@@ -42,10 +42,10 @@ function BottomNav({ selected, setSelected, pet }) {
       showLabels
       className={classes.nav}
     >
-      <BottomNavigationAction label='List' value='list' icon={<List />} onClick={() => console.log(pet)} />
+      <BottomNavigationAction label='List' value='list' icon={<ListIcon />} onClick={() => console.log(pet)} />
       <BottomNavigationAction label='Pet' value='pet' icon={petIconDisplay(pet.type)} onClick={() => console.log(pet)} />
-      <BottomNavigationAction label='Shelter' value='shelter' icon={<Store />} onClick={() => console.log(pet)} />
-      <BottomNavigationAction label='Favorites' value='favorites' icon={<Favorite />} />
+      <BottomNavigationAction label='Shelter' value='shelter' icon={<StoreIcon />} onClick={() => console.log(pet)} />
+      <BottomNavigationAction label='Favorites' value='favorites' icon={<FavoriteIcon />} />
     </BottomNavigation>
   );
 }
