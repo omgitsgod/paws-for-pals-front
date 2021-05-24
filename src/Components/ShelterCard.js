@@ -68,17 +68,17 @@ function ShelterCard({ loadedShelter, id }) {
     }
     return hours;
   }
-  const fetchShelter = async () => {
-    const url = `${backHost}/shelter?id=${id}`;
-    const data = await fetch(url).then((r) => r.json());
-    setShelter(data);
-  }
 
   useEffect(() => {
+    const fetchShelter = async () => {
+      const url = `${backHost}/shelter?id=${id}`;
+      const data = await fetch(url).then((r) => r.json());
+      setShelter(data);
+    };
     if (!loadedShelter) {
       fetchShelter();
     }
-  }, []);
+  }, [loadedShelter, id]);
 
   return (
     <>
