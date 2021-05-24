@@ -37,15 +37,6 @@ function App() {
     setIsAuthenticated(true);
     console.log('currently logged in as: ', user.name);
   };
-  const handleLogin = async () => {
-    const user = await fetch(backHost, {
-      method: 'GET',
-      credentials: 'include',
-    }).then((r) => r.json());
-    if (user.email) {
-      login(user);
-    }
-  };
   const handleLogout = () => {
     fetch(`${backHost}/logout`, {
       method: 'GET',
@@ -57,7 +48,6 @@ function App() {
   const handlePet = (data, liked, disliked) => {
     if (selected === 'list') {
       const less = data.length - 1 - liked - disliked;
-      console.log('less: ', less);
       setPet(less >= 0 ? data[less] : {});
     }
   };
@@ -66,7 +56,6 @@ function App() {
     setPet(fav);
   }
   const handleShelters = async (ids) => {
-    console.log('ids', ids)
     const results = await fetch(`${backHost}/shelters?ids=${JSON.stringify([...ids])}`).then(r => r.json());
     setShelters(results);
   }
@@ -79,8 +68,7 @@ function App() {
     getCats: () => setOptions({...options, type: 'Cat'}),
   };
   const displaySwitch = (view) => {
-    let result
-    switch(view) {
+    switch (view) {
       case 'list':
         return (
           <PetCardContainer
@@ -116,17 +104,39 @@ function App() {
         );
       case 'shelter':
         return (
-          <ShelterCard loadedShelter={handleLoadedShelter} id={pet.organization_id}/>
-        )
+          <ShelterCard
+            loadedShelter={handleLoadedShelter}
+            id={pet.organization_id}
+          />
+        );
+      default:
+        return (
+          <PetCardContainer
+            key={options.type}
+            type={options.type}
+            options={options}
+            handlePet={handlePet}
+            pet={pet}
+            selected={selected}
+            isAuthenticated={isAuthenticated}
+            handleShelters={handleShelters}
+          />
+        );
     }
-    return result
   }
   useEffect(() => {
+    const handleLogin = async () => {
+      const user = await fetch(backHost, {
+        method: 'GET',
+        credentials: 'include',
+      }).then((r) => r.json());
+      if (user.email) {
+        login(user);
+      }
+    };
     removeHash();
     handleLogin();
   }, []);
-  console.log(selected)
-  console.log(theme)
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
@@ -148,7 +158,7 @@ function App() {
               setOptions={setOptions}
               initialOptions={options}
             />) : displaySwitch(selected)}
-          <SpeedDialMenu onClickActions={onClickActions} />
+          <SpeedDialMenu onClickActions={onClickActions} hidden={false} />
         </div>
         <BottomNav selected={selected} setSelected={setSelected} pet={pet} />
       </div>
