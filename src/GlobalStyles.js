@@ -6,7 +6,7 @@ const useStyles = makeStyles(theme => ({
       boxSizing: 'border-box',
     },
     'html, body': {
-      background: `linear-gradient(${theme.palette.primary.main}, ${theme.palette.type == 'light' ? '#fff' : '#424242'})`,
+      background: `linear-gradient(${theme.palette.primary.main}, ${theme.palette.type === 'light' ? '#fff' : '#424242'})`,
       overscrollBehaviorY: 'contain',
       margin: 0,
       padding: 0,
