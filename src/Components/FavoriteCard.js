@@ -41,7 +41,7 @@ function FavoriteCard({ fav, fetchFavorites, handleFavoritePet, setPet, isAuthen
   });
   const deleteFavorite = isAuthenticated ? async () => {
     const url = `${backHost}/delete_favorite?id=${fav.id}`;
-    const data = await fetch(url, {
+    await fetch(url, {
       method: 'POST',
       credentials: 'include',
     }).then(fetchFavorites);
