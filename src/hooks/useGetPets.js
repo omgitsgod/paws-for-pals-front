@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react';
+import { useEffect, useReducer } from 'react';
 import { backHost } from '../config';
 
 const handleAgeString = (input) => {
@@ -91,11 +91,12 @@ function useGetPets(initialType, initialOptions) {
   const nextPage = () => {
     dispatch({ type: 'NEXT_PAGE'})
   }
+  const options = handleOptions(state.options);
   useEffect(() => {
     let cancelRequest = false;
     const getPets = async () => {
       dispatch({ type: 'FETCH_INIT' });
-      const url = `${backHost}/${state.type}?${handleOptions(state.options)}`;
+      const url = `${backHost}/${state.type}?${options}`;
       try {
         const result = await fetch(url).then((r) => r.json());
         const filtered = result.animals.filter((pet) => pet.photos[0]);
@@ -111,8 +112,7 @@ function useGetPets(initialType, initialOptions) {
     return () => {
       cancelRequest = true;
     };
-  }, [state.type, handleOptions(state.options)]);
-  useEffect(() => {}, [state.page]);
+  }, [state.type, options]);
   console.log('state', state.data)
   console.log('visable', state.visableData)
   return [{data: state.visableData, isLoading: state.isLoading, isError: state.isError}, setType, setOptions, nextPage];
