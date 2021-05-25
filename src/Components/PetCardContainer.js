@@ -25,7 +25,7 @@ function PetCardContainer({ type, options, handlePet, pet, selected, isAuthentic
   };
   const saveToDatabase = isAuthenticated ? async (item) => {
     console.log(item)
-    const success = await fetch(`${backHost}/save_favorite`, {
+    await fetch(`${backHost}/save_favorite`, {
       method: 'POST',
       credentials: 'include',
       body: JSON.stringify(item),
@@ -39,7 +39,7 @@ function PetCardContainer({ type, options, handlePet, pet, selected, isAuthentic
       if (storedFavorites) {
         favorites = JSON.parse(storedFavorites);
         if (favorites.length < unauthFavLimit) {
-          if (!favorites.filter((x) => x.id == item.id)[0]) {
+          if (!favorites.filter((x) => x.id === item.id)[0]) {
             favorites.push(item);
             localStorage.setItem('favorites', JSON.stringify(favorites));
           }
