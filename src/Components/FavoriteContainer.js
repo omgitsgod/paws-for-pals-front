@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import FavoriteCard from './FavoriteCard';
@@ -18,7 +18,7 @@ const useStyles = makeStyles({
 function FavoriteContainer({ handleFavoritePet, setPet, isAuthenticated }) {
   const classes = useStyles();
   const [favorites, setFavorites] = useState([]);
-  const fetchFavorites = isAuthenticated ? async () => {
+  const fetchFavorites = useMemo(() => isAuthenticated ? async () => {
     const url = `${backHost}/get_favorites`;
     const data = await fetch(url, {
       method: 'GET',
@@ -33,10 +33,10 @@ function FavoriteContainer({ handleFavoritePet, setPet, isAuthenticated }) {
     } else {
       setFavorites([]);
     }
-  }
+  }, [isAuthenticated])
   useEffect( () => {
     fetchFavorites();
-  }, [])
+  }, [fetchFavorites])
   const favoriteCards = favorites.map((fav) => (
     <FavoriteCard fav={fav} key={fav.id} fetchFavorites={fetchFavorites} handleFavoritePet={handleFavoritePet} setPet={setPet} isAuthenticated={isAuthenticated} />
   ));
