@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider, unstable_createMuiStrictModeTheme as createMuiTheme } from '@material-ui/core/styles';
 import GlobalStyles from '../GlobalStyles';
 import useDarkMode from '../hooks/useDarkMode';
 import TopBar from './TopBar';
