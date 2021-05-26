@@ -52,7 +52,7 @@ function TopBar({ user, isAuthenticated, handleLogout, darkMode, setDarkMode }) 
             checkedIcon={<Brightness2 />}
             icon={<WbSunny />}
             onChange={handleToggle}
-            color='inherit'
+            color='default'
             name='dark mode'
             inputProps={{ 'aria-label': 'dark mode' }}
           />
