@@ -8,7 +8,7 @@ import DogIcon from '../DogIcon';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: 100,
+    height: 50,
     flexGrow: 1,
   },
   speedDial: {
@@ -18,10 +18,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SpeedDialMenu({ onClickActions }) {
+function SpeedDialMenu({ onClickActions, hidden }) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const [hidden, setHidden] = useState(false);
   const mobile = useMediaQuery('(max-width:600px)');
 
   const actions = [
