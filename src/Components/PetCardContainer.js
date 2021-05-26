@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useSprings } from 'react-spring';
 import { useDrag } from 'react-use-gesture';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -10,8 +10,8 @@ import { backHost, to, from, trans } from '../config';
 function PetCardContainer({ type, options, handlePet, pet, selected, isAuthenticated, handleShelters }) {
   const [disliked] = useState(() => new Set());
   const [liked] = useState(() => new Set());
-  const [state, setType, setOptions, nextPage] = useGetPets(type, options);
-  const { data, isLoading, isError } = state;
+  const { state, setType, nextPage } = useGetPets(type, options);
+  const { data, isError } = state;
   const unauthFavLimit = 10;
   const [springProps, set] = useSprings(data?.length || 0, (i) => ({
     ...to(i),
@@ -61,6 +61,12 @@ function PetCardContainer({ type, options, handlePet, pet, selected, isAuthentic
     disliked.add(selectedPet);
     handlePet(data, liked.size, disliked.size);
   }
+  const handleNewData = useCallback(() => {
+    if (data?.length > 0 && selected === 'list') {
+      handlePet(data, liked.size, disliked.size);
+      handleShelters(new Set(data.map((pet) => pet.organization_id)));
+    }
+  }, [])
   const bind = useDrag(
     ({
       args: [index],
@@ -101,12 +107,8 @@ function PetCardContainer({ type, options, handlePet, pet, selected, isAuthentic
     setType(type);
   }, [type]);
   useEffect(() => {
-    if (data?.length > 0 && selected === 'list') {
-    handlePet(data, liked.size, disliked.size);
-    console.log('pet: ', data[data.length - 1])
-    handleShelters(new Set(data.map(pet => pet.organization_id)));
-    }
-  }, [data])
+    handleNewData();
+  }, [data, handleNewData])
 
   if (!data?.length && selected === 'list') {
     return (
@@ -119,7 +121,7 @@ function PetCardContainer({ type, options, handlePet, pet, selected, isAuthentic
   } else if (selected === 'list' && data) {
     return (
       <>
-        {springProps.map(({ x, y, rot, scale }, i) => (
+        {!isError && springProps.map(({ x, y, rot, scale }, i) => (
           <PetCard
             key={i}
             i={i}
