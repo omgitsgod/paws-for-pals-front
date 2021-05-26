@@ -113,8 +113,6 @@ function useGetPets(initialType, initialOptions) {
       cancelRequest = true;
     };
   }, [state.type, options]);
-  console.log('state', state.data)
-  console.log('visable', state.visableData)
   return [{data: state.visableData, isLoading: state.isLoading, isError: state.isError}, setType, setOptions, nextPage];
 }
 
