@@ -113,7 +113,7 @@ function useGetPets(initialType, initialOptions) {
       cancelRequest = true;
     };
   }, [state.type, options]);
-  return [{data: state.visableData, isLoading: state.isLoading, isError: state.isError}, setType, setOptions, nextPage];
+  return {state: {data: state.visableData, isLoading: state.isLoading, isError: state.isError}, setType, setOptions, nextPage};
 }
 
 export default useGetPets;
