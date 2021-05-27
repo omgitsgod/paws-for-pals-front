@@ -42,9 +42,9 @@ function BottomNav({ selected, setSelected, pet }) {
       showLabels
       className={classes.nav}
     >
-      <BottomNavigationAction label='List' value='list' icon={<ListIcon />} onClick={() => console.log(pet)} />
-      <BottomNavigationAction label='Pet' value='pet' icon={petIconDisplay(pet.type)} onClick={() => console.log(pet)} />
-      <BottomNavigationAction label='Shelter' value='shelter' icon={<StoreIcon />} onClick={() => console.log(pet)} />
+      <BottomNavigationAction label='List' value='list' icon={<ListIcon />} />
+      <BottomNavigationAction label='Pet' value='pet' icon={petIconDisplay(pet.type)} />
+      <BottomNavigationAction label='Shelter' value='shelter' icon={<StoreIcon />} />
       <BottomNavigationAction label='Favorites' value='favorites' icon={<FavoriteIcon />} />
     </BottomNavigation>
   );
