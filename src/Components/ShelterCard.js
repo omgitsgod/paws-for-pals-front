@@ -64,7 +64,7 @@ function ShelterCard({ loadedShelter, id }) {
   const handleHours = (days) => {
     const hours = []
     for (const day in days) {
-      hours.push(days[day] ? (<Typography align='right'>{day}: {days[day]}</Typography>) : (<Typography align='right'>{day}: <Typography align='right' color='error' display='inline'>closed</Typography></Typography>));
+      hours.push(days[day] ? (<Typography align='right' key={day}>{day}: {days[day]}</Typography>) : (<div key={day}><Typography component='span' align='right'>{day}: <Typography align='right' color='error' display='inline'>closed</Typography></Typography><br /></div>));
     }
     return hours;
   }
