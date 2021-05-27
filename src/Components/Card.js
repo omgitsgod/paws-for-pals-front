@@ -92,6 +92,11 @@ function Card({ animate, card, source, spring }) {
   });
   const checkIcon = (bool) => (bool ? (<Icon color='action'><CheckIcon/></Icon>) : (<Icon color='error'><CloseIcon /></Icon>));
 
+  const handleSummary = (text) => {
+    let textArray = text.split(' ')
+    textArray.map((z) => (z.length > 12 ? z.substring(0, 11) : z));
+    return textArray.map((z) => (z.length > 12 ? z.substring(0, 11) : z)).join(' ');
+  }
   const displayDeck = () => (
     <animated.div className={classes.organize} key={spring.i} style={{ x, y }}>
       <animated.div
@@ -115,7 +120,7 @@ function Card({ animate, card, source, spring }) {
         ) : null}
 
         <Typography className={classes.description} align='left'>
-          {description}
+          {handleSummary(description)}
         </Typography>
       </animated.div>
     </animated.div>
@@ -142,7 +147,7 @@ function Card({ animate, card, source, spring }) {
           ) : null}
 
           <Typography className={classes.description} align='left'>
-            {description}
+            {handleSummary(description)}
           </Typography>
           <Divider />
           <Button
