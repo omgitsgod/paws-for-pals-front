@@ -66,7 +66,7 @@ function PetCardContainer({ type, options, handlePet, pet, selected, isAuthentic
       handlePet(data, liked.size, disliked.size);
       handleShelters(new Set(data.map((pet) => pet.organization_id)));
     }
-  }, [])
+  }, [data, liked.size, disliked.size])
   const bind = useDrag(
     ({
       args: [index],
@@ -77,13 +77,9 @@ function PetCardContainer({ type, options, handlePet, pet, selected, isAuthentic
       velocity,
     }) => {
       const trigger = velocity > 0.2;
-      console.log('distance', distance);
       const dir = xDir < 0 ? -1 : 1;
-      console.log(dir);
       if (!down && trigger && xDir <= -0.5) addPetDisliked(index);
       if (!down && trigger && xDir >= 0.5) addPetLiked(index);
-      console.log('liked', liked)
-      console.log('disliked', disliked);
       set((i) => {
         if (index !== i) return;
         const isGone = disliked.has(data[index]) || liked.has(data[index]);
