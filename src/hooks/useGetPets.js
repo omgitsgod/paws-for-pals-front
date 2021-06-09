@@ -98,7 +98,10 @@ function useGetPets(initialType, initialOptions) {
       dispatch({ type: 'FETCH_INIT' });
       const url = `${backHost}/${state.type}?${options}`;
       try {
-        const result = await fetch(url).then((r) => r.json());
+        const result = await fetch(url, {
+          method: 'GET',
+          credentials: 'include',
+        }).then((r) => r.json());
         const filtered = result.animals.filter((pet) => pet.photos[0]);
         const formated = formatData(filtered);
         if (cancelRequest) return;
