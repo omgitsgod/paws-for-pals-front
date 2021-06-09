@@ -25,7 +25,7 @@ function App() {
   });
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [modal, setModal] = useState(localStorage.getItem('options') ? false : true);
+  const [modal, setModal] = useState(true);
   const [selected, setSelected] = useState('list');
   const [shelters, setShelters] = useState([])
   const [pet, setPet] = useState({});
