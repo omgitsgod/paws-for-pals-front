@@ -110,7 +110,7 @@ function PetCardContainer({ type, options, handlePet, pet, selected, isAuthentic
     return (
       <CircularProgress style={{marginTop: '40vh', height: '80px', width: '80px'}}/>
     );
-  } else if (selected === 'pet' && pet) {
+  } else if (selected === 'pet' && pet.name) {
     return (
       <Card source='profile' card={pet} />
     )
@@ -132,7 +132,7 @@ function PetCardContainer({ type, options, handlePet, pet, selected, isAuthentic
         ))}
       </>);
   } else {
-    return <p>Coming Soon</p>
+    return <CircularProgress style={{marginTop: '40vh', height: '80px', width: '80px'}}/>
   }
 }
 
