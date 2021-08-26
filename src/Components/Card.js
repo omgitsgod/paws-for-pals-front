@@ -93,9 +93,11 @@ function Card({ animate, card, source, spring }) {
   const checkIcon = (bool) => (bool ? (<Icon color='action'><CheckIcon/></Icon>) : (<Icon color='error'><CloseIcon /></Icon>));
 
   const handleSummary = (text) => {
+    if (text) {
     let textArray = text.split(' ')
     textArray.map((z) => (z.length > 12 ? z.substring(0, 11) : z));
     return textArray.map((z) => (z.length > 12 ? z.substring(0, 11) : z)).join(' ');
+    } else return ''
   }
   const displayDeck = () => (
     <animated.div className={classes.organize} key={spring.i} style={{ x, y }}>
