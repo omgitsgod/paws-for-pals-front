@@ -74,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Card({ animate, card, source, spring }) {
   const classes = useStyles();
-  const { name, distance, description, species, age, breeds, status, attributes, gender, size } = card;
+  const { name, distance, contact, description, species, age, breeds, status, attributes, gender, size } = card;
   const { rot, scale, trans, bind, i, x, y } = spring || {};
   const mainPhoto = card.photos[0].full;
   const photos = card.photos;
@@ -112,15 +112,12 @@ function Card({ animate, card, source, spring }) {
         <Typography variant={nameVariant} align='left'>
           {name}
         </Typography>
-        {distance ? (
-          <Typography className={classes.distance} variant='h6' align='left'>
-            <Icon>
-              <LocationIcon />
-            </Icon>
-            {distance > 1 ? distance.toFixed(2) : '< 1'} miles away
-          </Typography>
-        ) : null}
-
+        <Typography className={classes.distance} variant='h6' align='left'>
+          <Icon>
+            <LocationIcon />
+          </Icon>
+          {distance ? (distance > 1 ? distance.toFixed(2) : '< 1') + 'miles away' : contact.address.city ? `${contact.address.city}, ${contact.address.state}` : null}
+        </Typography>
         <Typography className={classes.description} align='left'>
           {handleSummary(description)}
         </Typography>
@@ -139,15 +136,12 @@ function Card({ animate, card, source, spring }) {
       </Typography>
       <div className={classes.info}>
         <div>
-          {distance ? (
-            <Typography className={classes.distance} variant='h6' align='left'>
-              <Icon>
-                <LocationIcon />
-              </Icon>
-              {distance > 1 ? distance.toFixed(2) : '< 1'} miles away
-            </Typography>
-          ) : null}
-
+          <Typography className={classes.distance} variant='h6' align='left'>
+            <Icon>
+              <LocationIcon />
+            </Icon>
+            {distance ? (distance > 1 ? distance.toFixed(2) : '< 1') + 'miles away' : contact.address.city ? `${contact.address.city}, ${contact.address.state}` : null}
+          </Typography>
           <Typography className={classes.description} align='left'>
             {handleSummary(description)}
           </Typography>
