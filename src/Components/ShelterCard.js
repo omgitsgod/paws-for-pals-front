@@ -99,20 +99,16 @@ function ShelterCard({ loadedShelter, id }) {
           </Typography>
           <div className={classes.info}>
             <div>
-              {shelter.distance ? (
-                <Typography
-                  className={classes.distance}
-                  variant='h6'
-                  align='left'
-                >
-                  <Icon>
-                    <LocationIcon />
-                  </Icon>
-                  {shelter.distance > 1 ? shelter.distance.toFixed(2) : '< 1'}{' '}
-                  miles away
-                </Typography>
-              ) : null}
-
+              <Typography
+                className={classes.distance}
+                variant='h6'
+                align='left'
+              >
+                <Icon>
+                  <LocationIcon />
+                </Icon>
+                {shelter.distance ? (shelter.distance > 1 ? shelter.distance.toFixed(2) : '< 1') + ' miles away' : shelter.address.city ? `${shelter.address.city}, ${shelter.address.state}` : null}
+              </Typography>
               <Typography className={classes.description} align='left'>
                 {shelter.mission_statement}
               </Typography>
