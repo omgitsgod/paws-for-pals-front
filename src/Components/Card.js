@@ -171,7 +171,12 @@ function Card({ animate, card, source, spring }) {
             <Icon>
               <LocationIcon />
             </Icon>
-            {distance ? (distance > 1 ? distance.toFixed(2) : '< 1') + 'miles away' : contact.address.city ? `${contact.address.city}, ${contact.address.state}` : null}
+            {distance ? (distance > 1 ? distance.toFixed(2) : '< 1') + 'miles away  ' : contact.address.city ? `${contact.address.city}, ${contact.address.state}  ` : null}
+            <Icon
+              color='error'
+            >
+              <StoreIcon />
+            </Icon>
           </Typography>
           <Typography className={classes.description} align='left'>
             {handleSummary(description)}
