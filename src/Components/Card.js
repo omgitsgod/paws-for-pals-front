@@ -1,9 +1,11 @@
 import React from 'react';
 import { Typography, Icon, useMediaQuery, Button, Divider } from '@material-ui/core';
-import { LocationOn as LocationIcon, Close as CloseIcon, Check as CheckIcon } from '@material-ui/icons';
+import { LocationOn as LocationIcon, Close as CloseIcon, Check as CheckIcon, Pets as PetIcon, Store as StoreIcon } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import Carousel from 'react-material-ui-carousel';
 import { useSpring, animated, to as interpolate } from 'react-spring';
+import DogIcon from '../DogIcon';
+import CatIcon from '../CatIcon';
 
 const useStyles = makeStyles((theme) => ({
   organize: {
@@ -76,8 +78,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Card({ animate, card, source, spring }) {
+  console.log(card)
   const classes = useStyles();
-  const { name, id, distance, contact, description, species, age, breeds, status, attributes, gender, size, url } = card;
+  const { name, id, type, distance, contact, description, species, age, breeds, status, attributes, gender, size, url } = card;
   const { rot, scale, trans, bind, i, x, y } = spring || {};
   const mainPhoto = card.photos[0].full;
   const photos = card.photos;
@@ -102,6 +105,21 @@ function Card({ animate, card, source, spring }) {
     return textArray.map((z) => (z.length > 12 ? z.substring(0, 11) : z)).join(' ');
     } else return ''
   }
+  const petIconDisplay = (type) => {
+    let icon
+    switch (type) {
+      case 'Dog':
+        icon = (<DogIcon />);
+        break;
+      case 'Cat':
+        icon = (<CatIcon />);
+        break;
+      default:
+        icon = (<PetIcon />);
+        break;
+    }
+    return icon
+  } 
   const displayDeck = () => (
     <animated.div className={classes.organize} key={spring.i} style={{ x, y }}>
       <animated.div
@@ -119,7 +137,17 @@ function Card({ animate, card, source, spring }) {
           <Icon>
             <LocationIcon />
           </Icon>
-          {distance ? (distance > 1 ? distance.toFixed(2) : '< 1') + 'miles away' : contact.address.city ? `${contact.address.city}, ${contact.address.state}` : null}
+          {distance ? (distance > 1 ? distance.toFixed(2) : '< 1') + 'miles away  ' : contact.address.city ? `${contact.address.city}, ${contact.address.state}  ` : null}
+          <Icon
+            color='error'
+          >
+            {petIconDisplay(type)}
+          </Icon>
+          <Icon
+            color='error'
+          >
+            <StoreIcon />
+          </Icon>
         </Typography>
         <Typography className={classes.description} align='left'>
           {handleSummary(description)}
