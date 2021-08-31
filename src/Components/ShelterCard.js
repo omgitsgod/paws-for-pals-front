@@ -15,6 +15,9 @@ const useStyles = makeStyles((theme) => ({
   profileImg: {
     height: '280px',
   },
+  link: {
+    textDecoration: 'none'
+  },
   distance: {
     color: 'gray',
   },
@@ -43,6 +46,8 @@ const useStyles = makeStyles((theme) => ({
   },
   contact: {
     marginTop: theme.spacing(1),
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1)
   },
 }));
 
@@ -113,6 +118,13 @@ function ShelterCard({ loadedShelter, id }) {
                 {shelter.mission_statement}
               </Typography>
               <Divider />
+              <Button
+                className={classes.contact}
+                variant='contained'
+                color='primary'
+              >
+                View Pets
+              </Button>
               <Button
                 className={classes.contact}
                 variant='contained'
