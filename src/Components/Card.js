@@ -15,6 +15,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '5vh',
     justifyContent: 'center',
   },
+  link: {
+    textDecoration: 'none'
+  },
   img: {
     height: '380px',
     width: '85%',
@@ -74,7 +77,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Card({ animate, card, source, spring }) {
   const classes = useStyles();
-  const { name, distance, contact, description, species, age, breeds, status, attributes, gender, size } = card;
+  const { name, id, distance, contact, description, species, age, breeds, status, attributes, gender, size, url } = card;
   const { rot, scale, trans, bind, i, x, y } = spring || {};
   const mainPhoto = card.photos[0].full;
   const photos = card.photos;
@@ -146,13 +149,15 @@ function Card({ animate, card, source, spring }) {
             {handleSummary(description)}
           </Typography>
           <Divider />
-          <Button
-            className={classes.contact}
-            variant='contained'
-            color='primary'
-          >
-            Contact me
-          </Button>
+          <a className={classes.link} href={`mailto:${contact.email}?subject=${name}: ${id}&body=%0D%0A%0D%0A%0D%0A${url}`}>
+            <Button
+              className={classes.contact}
+              variant='contained'
+              color='primary'
+            >
+              Contact me
+            </Button>
+          </a>
         </div>
         <div style={{ marginTop: '-5vh' }}>
           <Typography align='right'>
