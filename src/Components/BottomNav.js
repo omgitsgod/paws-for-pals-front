@@ -11,6 +11,7 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     bottom: theme.spacing(0),
     position: 'fixed',
+    borderTop: `.5px solid ${theme.palette.type === 'light' ? 'black' : 'white'}`
   },
 }));
 
