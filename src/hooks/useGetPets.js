@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from 'react';
+import { useEffect, useReducer, useCallback } from 'react';
 import { backHost } from '../config';
 
 const handleAgeString = (input) => {
@@ -85,9 +85,9 @@ function useGetPets(initialType, initialOptions) {
   const setOptions = (options) => {
     dispatch({ type: 'SET_OPTIONS', payload: options });
   };
-  const setType = (type) => {
+  const setType = useCallback((type) => {
     dispatch({ type: 'SET_TYPE', payload: type });
-  };
+  }, []);
   const nextPage = () => {
     dispatch({ type: 'NEXT_PAGE'})
   }
